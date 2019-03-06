@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	prompt := prompter.New(os.Stdout, os.Stdin)
+	prompt := prompter.New(os.Stdout, os.Stdin, true)
 	confirmOptions := prompter.Confirmation{
 		Label:             "Install with current database?",
 		Choices:           []string{"that's right", "maybe not", "definitely not"},

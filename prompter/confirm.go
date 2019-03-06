@@ -50,7 +50,9 @@ type Confirmation struct {
 	// user doesn't input any data.
 	EnableDefaultValue bool
 	// defaultValue is the default value that will be used when
-	// the user doesn't input any data.
+	// the user doesn't input any data, if EnableDefaultValue
+	// is set to true OR that the prompter is set to not
+	// interactive.
 	DefaultValue bool
 
 	// The parser that will be used to convert the user's input
@@ -77,6 +79,11 @@ func (c Confirmation) choices() string {
 
 // Confirm prompts the user to confirm something.
 func (p Prompter) Confirm(config Confirmation) (bool, error) {
+	// If prompter is not set to interactive, directly return the default value.
+	if !p.interactive {
+		return config.DefaultValue, nil
+	}
+
 	// Print the label and choices.
 	fmt.Fprintf(p.writer, "%s [%s] ", config.Label, config.choices())
 
