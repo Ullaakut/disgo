@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"strconv"
 	"strings"
+
+	"github.com/Ullaakut/colog/logger"
 )
 
 var (
@@ -92,7 +94,8 @@ func (p Prompter) Confirm(config Confirmation) (bool, error) {
 	// Parse user input.
 	res, err := config.parser()(strings.TrimSpace(text))
 	if err != nil && config.RequireValidInput {
-		// Call confirm again until a valid input is given
+		// Show parse error and call confirm again until a valid input is given
+		fmt.Fprintf(p.writer, "%s\n", logger.Failure(err))
 		return p.Confirm(config)
 	}
 
