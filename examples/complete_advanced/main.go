@@ -33,7 +33,7 @@ func main() {
 
 	log.Debugln("Dashboard deployed at", logger.Link("https://172.187.10.23:37356/dashboard"))
 
-	prompt := prompter.New(os.Stdout, os.Stdin)
+	prompt := prompter.New(os.Stdout, os.Stdin, true)
 	result, err := prompt.Confirm(prompter.Confirmation{
 		Label:             "Install with current database?",
 		RequireValidInput: true,

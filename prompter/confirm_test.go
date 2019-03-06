@@ -90,7 +90,7 @@ func TestPrompterConfirm(t *testing.T) {
 			_, err := in.Write(append([]byte(test.input), '\n'))
 			require.NoError(t, err)
 
-			subject := New(&out, &in)
+			subject := New(&out, &in, true)
 
 			result, err := subject.Confirm(Confirmation{
 				Label:              test.prompt,
@@ -135,7 +135,7 @@ func TestReadError(t *testing.T) {
 	_, err := in.Write(append([]byte("user input"), '\n'))
 	require.NoError(t, err)
 
-	subject := New(&out, &in)
+	subject := New(&out, &in, true)
 
 	_, err = subject.Confirm(Confirmation{
 		Label: "label",
@@ -143,6 +143,26 @@ func TestReadError(t *testing.T) {
 
 	// Ensure that if the reader fails, an error is returned.
 	assert.Error(t, err)
+}
+
+func TestNonInteractivePrompter(t *testing.T) {
+	in := readerMock{}
+	out := bytes.Buffer{}
+
+	subject := New(&out, &in, false)
+
+	value, err := subject.Confirm(Confirmation{
+		Label:        "label",
+		DefaultValue: true,
+	})
+
+	// Ensure that when the prompter is set to non-interactive,
+	// it returns no error.
+	assert.NoError(t, err)
+
+	// Ensure that when the prompter is set to non-interactive,
+	// it returns the default value.
+	assert.Equal(t, true, value)
 }
 
 func TestRequireValidInput(t *testing.T) {
@@ -158,7 +178,7 @@ func TestRequireValidInput(t *testing.T) {
 		require.NoError(t, err)
 	}
 
-	subject := New(&out, &in)
+	subject := New(&out, &in, true)
 
 	res, err := subject.Confirm(Confirmation{
 		Label:             "label",
