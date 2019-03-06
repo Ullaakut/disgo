@@ -54,6 +54,9 @@ type Confirmation struct {
 	// The parser that will be used to convert the user's input
 	// into a true/false value.
 	Parser ConfirmationParser
+	// RequireValidInput makes the prompt loop until the user
+	// enters an input that doesn't trigger a parser error.
+	RequireValidInput bool
 }
 
 func (c Confirmation) parser() ConfirmationParser {
@@ -87,5 +90,11 @@ func (p Prompter) Confirm(config Confirmation) (bool, error) {
 	}
 
 	// Parse user input.
-	return config.parser()(strings.TrimSpace(text))
+	res, err := config.parser()(strings.TrimSpace(text))
+	if err != nil && config.RequireValidInput {
+		// Call confirm again until a valid input is given
+		return p.Confirm(config)
+	}
+
+	return res, err
 }
