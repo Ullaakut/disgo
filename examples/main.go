@@ -3,31 +3,47 @@ package main
 import (
 	"os"
 
-	"github.com/Ullaakut/colog"
+	"github.com/Ullaakut/colog/logger"
+	"github.com/Ullaakut/colog/prompter"
 )
 
 func main() {
-	logger, err := colog.NewLogger(os.Stdout, colog.WithDebug())
+	log, err := logger.New(os.Stdout, logger.WithDebug(), logger.WithErrorOutput(os.Stderr))
 	if err != nil {
 		os.Exit(1)
 	}
 
-	logger.Infoln("Starting listener", colog.Trace("on localhost:4242"), colog.Trace("in PID 8484"))
+	log.Infoln("Starting listener on localhost:4242 in PID 8484")
 
-	logger.Debug(colog.Trace("Accessing database... "))
-	logger.Debugln(colog.Success("ok"))
+	log.Debug(logger.Trace("Accessing database... "))
+	log.Debugln(logger.Success("ok"))
 
-	logger.Infoln(colog.Important("Database is healthy"))
+	log.Debug(logger.Trace("Checking database integrity... "))
+	log.Debugln(logger.Success("ok"))
 
-	logger.Infoln(colog.Failure("Database connection lost"))
-	logger.Info(colog.Trace("Connecting to fallback database..."))
-	logger.Infoln(colog.Success("ok"))
+	log.Debug(logger.Trace("Synchronizing local store... "))
+	log.Debugln(logger.Success("ok"))
 
-	logger.Debugln("Dashboard deployed at ", colog.Link("https://172.187.10.23:37356/dashboard"))
+	log.Infoln(logger.Important("Database is healthy"))
 
-	prompt := colog.NewPrompter(os.Stdout, os.Stdin)
-	result, err := prompt.Confirm(colog.Important("Are you stupid? [y/N] "), true, colog.DefaultConfirmation)
-	logger.Infof("Result: %v Err: %v\n", result, err)
+	log.Infoln(logger.Failure("Database connection lost"))
+	log.Info(logger.Trace("Connecting to fallback database..."))
+	log.Infoln(logger.Success("ok"))
 
-	logger.Infoln(colog.Success("\xE2\x9C\x94 Application ready"))
+	log.Debugln("Dashboard deployed at", logger.Link("https://172.187.10.23:37356/dashboard"))
+
+	prompt := prompter.New(os.Stdout, os.Stdin)
+	result, err := prompt.Confirm(prompter.Confirmation{
+		Label: "Are you blue?",
+
+		EnableDefaultValue: true,
+		DefaultValue:       true,
+	})
+	if err != nil {
+		log.Errorf("Unexpected level of blueness: %s\n", logger.Failure(err))
+		os.Exit(1)
+	}
+
+	log.Infoln("Blue:", result)
+	log.Infoln(logger.Success("\xE2\x9C\x94 Application ready"))
 }
