@@ -5,7 +5,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/Ullaakut/colog/logger"
+	"github.com/Ullaakut/disgo/logger"
 )
 
 var (

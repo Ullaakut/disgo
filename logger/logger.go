@@ -7,7 +7,7 @@ import (
 	"github.com/fatih/color"
 )
 
-// Logger represents a colog Logger.
+// Logger represents a disgo Logger.
 // It writes the output on a given io.Writer
 // and can toggle debug logs and have an error writer.
 type Logger struct {
