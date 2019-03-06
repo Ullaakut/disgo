@@ -24,7 +24,7 @@ Color provides three essential features for most user-friendly CLI applications:
 
 1. Simple output levels (in `github.com/Ullaakut/disgo/logger`)
     - Debug outputs are like normal outputs, but are written only on a logger with enabled debug.
-    - Error outputs are written on the error writer, usually stderr, but it's configurable.
+    - Error outputs can optionally be written on an error writer.
     - Info outputs are written on the standard writer, usually stdout, but it's configurable.
 2. Output formatting (in `github.com/Ullaakut/disgo/logger`)
     - Important logs can be passed to `logger.Important()` which will format them into bold white text.
