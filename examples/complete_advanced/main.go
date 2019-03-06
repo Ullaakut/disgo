@@ -3,8 +3,8 @@ package main
 import (
 	"os"
 
-	"github.com/Ullaakut/colog/logger"
-	"github.com/Ullaakut/colog/prompter"
+	"github.com/Ullaakut/disgo/logger"
+	"github.com/Ullaakut/disgo/prompter"
 )
 
 func main() {
@@ -13,7 +13,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	log.Infoln("Starting listener on localhost:4242 in PID 8484")
+	log.Infoln("Looking for remote database on", logger.Link("172.187.10.23"))
 
 	log.Debug(logger.Trace("Accessing database... "))
 	log.Debugln(logger.Success("ok"))
@@ -24,9 +24,10 @@ func main() {
 	log.Debug(logger.Trace("Synchronizing local store... "))
 	log.Debugln(logger.Success("ok"))
 
-	log.Infoln(logger.Important("Database is healthy"))
+	log.Infoln(logger.Important("Local store up to date with remote database"))
 
 	log.Infoln(logger.Failure("Database connection lost"))
+
 	log.Info(logger.Trace("Connecting to fallback database..."))
 	log.Infoln(logger.Success("ok"))
 
@@ -34,16 +35,18 @@ func main() {
 
 	prompt := prompter.New(os.Stdout, os.Stdin)
 	result, err := prompt.Confirm(prompter.Confirmation{
-		Label: "Are you blue?",
-
-		EnableDefaultValue: true,
-		DefaultValue:       true,
+		Label:             "Install with current database?",
+		RequireValidInput: true,
 	})
 	if err != nil {
-		log.Errorf("Unexpected level of blueness: %s\n", logger.Failure(err))
+		log.Errorf("Unexpected user input: %s\n", logger.Failure(err))
 		os.Exit(1)
 	}
 
-	log.Infoln("Blue:", result)
-	log.Infoln(logger.Success("\xE2\x9C\x94 Application ready"))
+	log.Infoln("Installing with current database:", result)
+
+	log.Debug(logger.Trace("Installation in progress... "))
+	log.Debugln(logger.Success("ok"))
+
+	log.Infoln(logger.Success("\xE2\x9C\x94 Installation successful"))
 }
