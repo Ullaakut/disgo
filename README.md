@@ -168,3 +168,17 @@ func main() {
 <p align="center">
     <img src="images/advanced_prompt.png">
 </p>
+
+## Symbols
+
+### Code
+
+```go
+log.Infoln(symbols.CheckMark, symbols.CrossMark, symbols.LeftArrow, symbols.RightArrow, symbols.LeftTriangle, symbols.RightTriangle)
+```
+
+### Output
+
+```
+✔ ✖ ❮ ❯ ◀ ▶
+```
