@@ -1,11 +1,11 @@
-package symbols
+package symbol
 
 const (
-	// CheckMark displays ✔
-	CheckMark = "\xe2\x9c\x94"
+	// Check displays ✔
+	Check = "\xe2\x9c\x94"
 
-	// CrossMark displays ✖
-	CrossMark = "\xe2\x9c\x96"
+	// Cross displays ✖
+	Cross = "\xe2\x9c\x96"
 
 	// LeftArrow displays ❮
 	LeftArrow = "\xe2\x9d\xae"
