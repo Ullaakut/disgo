@@ -5,6 +5,7 @@ import (
 
 	"github.com/Ullaakut/disgo/logger"
 	"github.com/Ullaakut/disgo/prompter"
+	"github.com/Ullaakut/disgo/symbol"
 )
 
 func main() {
@@ -47,5 +48,5 @@ func main() {
 	log.Debug(logger.Trace("Installation in progress... "))
 	log.Debugln(logger.Success("ok"))
 
-	log.Infoln(logger.Success("\xE2\x9C\x94 Installation successful"))
+	log.Infoln(logger.Success(symbol.Check + " Installation successful"))
 }
