@@ -174,7 +174,7 @@ func main() {
 ### Code
 
 ```go
-log.Infoln(symbols.CheckMark, symbols.CrossMark, symbols.LeftArrow, symbols.RightArrow, symbols.LeftTriangle, symbols.RightTriangle)
+log.Infoln(symbol.Check, symbol.Cross, symbol.LeftArrow, symbol.RightArrow, symbol.LeftTriangle, symbol.RightTriangle)
 ```
 
 ### Output
