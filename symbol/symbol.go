@@ -1,3 +1,5 @@
+// Package symbol contains a few UTF-8 symbols to be used in your user interface.
+// They are all colorless so that they can be used along with `disgo/logger`'s formatting helpers.
 package symbol
 
 const (

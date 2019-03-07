@@ -32,5 +32,5 @@ func main() {
 	log.Infoln(logger.Success("ok"))
 
 	log.Debugln("Dashboard deployed at", logger.Link("https://172.187.10.23:37356/dashboard"))
-	log.Infoln(logger.Success("\xE2\x9C\x94 Installation successful"))
+	log.Infoln(logger.Success(symbol.Check + " Installation successful"))
 }
