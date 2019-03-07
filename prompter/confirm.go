@@ -45,11 +45,12 @@ type Confirmation struct {
 	// the default value, if there is one).
 	Choices []string
 
-	// enableDefaultValue tells the prompter whether or not
+	// EnableDefaultValue tells the prompter whether or not
 	// there is a default value that will be used when the
 	// user doesn't input any data.
 	EnableDefaultValue bool
-	// defaultValue is the default value that will be used when
+
+	// DefaultValue is the default value that will be used when
 	// the user doesn't input any data, if EnableDefaultValue
 	// is set to true OR that the prompter is set to not
 	// interactive.
@@ -58,6 +59,7 @@ type Confirmation struct {
 	// The parser that will be used to convert the user's input
 	// into a true/false value.
 	Parser ConfirmationParser
+
 	// RequireValidInput makes the prompt loop until the user
 	// enters an input that doesn't trigger a parser error.
 	RequireValidInput bool
