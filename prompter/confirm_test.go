@@ -164,34 +164,3 @@ func TestNonInteractivePrompter(t *testing.T) {
 	// it returns the default value.
 	assert.Equal(t, true, value)
 }
-
-func TestRequireValidInput(t *testing.T) {
-	inputs := []string{
-		"invalid", "invalid", "invalid", "invalid", "valid",
-	}
-
-	in := bytes.Buffer{}
-	out := bytes.Buffer{}
-
-	for _, input := range inputs {
-		_, err := in.Write(append([]byte(input), '\n'))
-		require.NoError(t, err)
-	}
-
-	subject := New(&out, &in, true)
-
-	res, err := subject.Confirm(Confirmation{
-		Label:             "label",
-		RequireValidInput: true,
-		Parser: func(input string) (bool, error) {
-			if input == "valid" {
-				return true, nil
-			}
-			return false, errors.New("invalid input")
-		},
-	})
-
-	// Ensure that if the reader fails, an error is returned.
-	assert.NoError(t, err)
-	assert.Equal(t, true, res)
-}

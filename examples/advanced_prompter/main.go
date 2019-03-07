@@ -10,9 +10,8 @@ import (
 func main() {
 	prompt := prompter.New(os.Stdout, os.Stdin, true)
 	confirmOptions := prompter.Confirmation{
-		Label:             "Install with current database?",
-		Choices:           []string{"that's right", "maybe not", "definitely not"},
-		RequireValidInput: true,
+		Label:   "Install with current database?",
+		Choices: []string{"that's right", "maybe not", "definitely not"},
 		Parser: func(input string) (bool, error) {
 			switch input {
 			case "that's right":
