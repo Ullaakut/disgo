@@ -4,8 +4,6 @@ import (
 	"fmt"
 	"strconv"
 	"strings"
-
-	"github.com/Ullaakut/disgo/logger"
 )
 
 var (
@@ -59,10 +57,6 @@ type Confirmation struct {
 	// The parser that will be used to convert the user's input
 	// into a true/false value.
 	Parser ConfirmationParser
-
-	// RequireValidInput makes the prompt loop until the user
-	// enters an input that doesn't trigger a parser error.
-	RequireValidInput bool
 }
 
 func (c Confirmation) parser() ConfirmationParser {
@@ -101,12 +95,5 @@ func (p Prompter) Confirm(config Confirmation) (bool, error) {
 	}
 
 	// Parse user input.
-	res, err := config.parser()(strings.TrimSpace(text))
-	if err != nil && config.RequireValidInput {
-		// Show parse error and call confirm again until a valid input is given
-		fmt.Fprintf(p.writer, "%s\n", logger.Failure(err))
-		return p.Confirm(config)
-	}
-
-	return res, err
+	return config.parser()(strings.TrimSpace(text))
 }

@@ -35,8 +35,7 @@ func main() {
 
 	prompt := prompter.New(os.Stdout, os.Stdin, true)
 	result, err := prompt.Confirm(prompter.Confirmation{
-		Label:             "Install with current database?",
-		RequireValidInput: true,
+		Label: "Install with current database?",
 	})
 	if err != nil {
 		log.Errorf("Unexpected user input: %s\n", logger.Failure(err))
