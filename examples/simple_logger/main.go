@@ -4,6 +4,7 @@ import (
 	"os"
 
 	"github.com/Ullaakut/disgo/logger"
+	"github.com/Ullaakut/disgo/symbols"
 )
 
 func main() {
@@ -15,13 +16,13 @@ func main() {
 	log.Infoln("Looking for remote database on", logger.Link("172.187.10.23"))
 
 	log.Debug(logger.Trace("Accessing database... "))
-	log.Debugln(logger.Success("ok"))
+	log.Debugln(logger.Success(symbols.CheckMark))
 
 	log.Debug(logger.Trace("Checking database integrity... "))
-	log.Debugln(logger.Success("ok"))
+	log.Debugln(logger.Success(symbols.CheckMark))
 
 	log.Debug(logger.Trace("Synchronizing local store... "))
-	log.Debugln(logger.Success("ok"))
+	log.Debugln(logger.Success(symbols.CheckMark))
 
 	log.Infoln(logger.Important("Local store up to date with remote database"))
 
