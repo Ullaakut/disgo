@@ -50,7 +50,7 @@ import (
 )
 
 func main() {
-    log, err := logger.New(os.Stdout, logger.WithDebug(), logger.WithErrorOutput(os.Stderr))
+    log, err := logger.New(os.Stdout, logger.WithDebug(true), logger.WithErrorOutput(os.Stderr))
     if err != nil {
         os.Exit(1)
     }

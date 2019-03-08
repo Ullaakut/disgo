@@ -33,9 +33,9 @@ func New(w io.Writer, options ...func(*Logger)) (*Logger, error) {
 }
 
 // WithDebug sets the logger debug mode to true.
-func WithDebug() func(*Logger) {
+func WithDebug(enabled bool) func(*Logger) {
 	return func(logger *Logger) {
-		logger.debug = true
+		logger.debug = enabled
 	}
 }
 
