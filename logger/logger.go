@@ -46,10 +46,12 @@ func WithErrorOutput(w io.Writer) func(*Logger) {
 	}
 }
 
-// WithNoColors disables colors in the logger.
-func WithNoColors() func(*Logger) {
+// WithColors sets the use of colors in the logger. By default, whether or not
+// colors are enabled depends on the user's TTY, but this option can be used
+// to force colors to be enabled or disabled.
+func WithColors(enabled bool) func(*Logger) {
 	return func(_ *Logger) {
-		color.NoColor = true
+		color.NoColor = !enabled
 	}
 }
 
