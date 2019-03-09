@@ -15,9 +15,9 @@ var (
 	// to represent a log of low importance for the user.
 	Trace = color.New(color.FgHiWhite, color.Faint).SprintFunc()
 
-	// Important colors a message in bold white to represent an important
+	// Important colors a message in bold to represent an important
 	// information.
-	Important = color.New(color.FgHiWhite, color.Bold).SprintFunc()
+	Important = color.New(color.Bold).SprintFunc()
 
 	// Link colors a message in underlined blue to represent a clickable link.
 	Link = color.New(color.FgBlue, color.Underline).SprintFunc()
