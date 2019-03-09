@@ -1,3 +1,5 @@
+// Package prompter is a simple user prompter that asks users
+// for input data or confirmations.
 package prompter
 
 import (
@@ -7,9 +9,18 @@ import (
 
 // Prompter prompts users to let them input data, and parses it.
 type Prompter struct {
+	// Writer on which the prompt's label and choices are
+	// written when prompting them.
 	writer io.Writer
+
+	// Reader from which the user's response to the prompt is
+	// read.
 	reader *bufio.Reader
 
+	// Whether or not this prompter is running in a TTY. If this is
+	// set to false, this prompter will return default values instead
+	// of prompting users, and it will return errors if no default values
+	// are set.
 	interactive bool
 }
 

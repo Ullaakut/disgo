@@ -1,3 +1,5 @@
+// Package logger is a simplified logger which only
+// handles two basic log levels.
 package logger
 
 import (
@@ -11,11 +13,14 @@ import (
 // It writes the output on a given io.Writer
 // and can toggle debug logs and have an error writer.
 type Logger struct {
+	// Writer on which the Info and Debug logs are written.
 	standardOutput io.Writer
-	errorOutput    io.Writer
+	// Writer on which the Error logs are written.
+	errorOutput io.Writer
 
-	debug       bool
-	logFilePath string
+	// Whether or not Debug logs are enabled. If this is
+	// disabled, Debug logs are not shown to the user.
+	debug bool
 }
 
 // New creates a new Logger and binds the given writer to its outputs.
