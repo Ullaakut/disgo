@@ -17,10 +17,10 @@ type Prompter struct {
 	// read.
 	reader *bufio.Reader
 
-	// Whether or not this prompter is running in a TTY. If this is
-	// set to false, this prompter will return default values instead
-	// of prompting users, and it will return errors if no default values
-	// are set.
+	// Whether or not this prompter should be interactive. If this is
+	// set to false, the prompter will never prompt the user and always
+	// return default values. This can be useful for running this code
+	// outside of a TTY for example.
 	interactive bool
 }
 
