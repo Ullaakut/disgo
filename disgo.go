@@ -1,10 +1,9 @@
 // Package disgo is a logging and prompting library for
 // modern command line interfaces.
 //
-// It is NOT a substitute for a structured logger
-// in an application or a microservice, since it is
-// completely centered around user interaction and
-// user-friendly terminal interfaces.
+// It does not provide sutructed logging and is not built
+// with performance in mind, since it is aimed at building
+// user-friendly command line interfaces, and not applications.
 //
 // The packages that compose disgo can be used independently.
 //
