@@ -20,7 +20,7 @@
 
 Simple output library for go CLIs.
 
-Color provides three essential features for most user-friendly CLI applications:
+Disgo provides three essential features for most user-friendly CLI applications:
 
 1. Simple output levels (in `github.com/Ullaakut/disgo/logger`)
     - Debug outputs are like normal outputs, but are written only on a logger with enabled debug.
