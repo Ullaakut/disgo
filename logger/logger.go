@@ -81,7 +81,7 @@ func (l Logger) Info(a ...interface{}) {
 
 // Info writes an info log on the global logger's standard writer.
 func Info(a ...interface{}) {
-	fmt.Fprint(log.standardOutput, a...)
+	log.Info(a...)
 }
 
 // Infoln writes an info log on the logger's standard writer
@@ -93,7 +93,7 @@ func (l Logger) Infoln(a ...interface{}) {
 // Infoln writes an info log on the global logger's standard writer
 // and appends a newline to its input.
 func Infoln(a ...interface{}) {
-	fmt.Fprintln(log.standardOutput, a...)
+	log.Infoln(a...)
 }
 
 // Infof formats according to a format specifier and writes
@@ -105,7 +105,7 @@ func (l Logger) Infof(format string, a ...interface{}) {
 // Infof formats according to a format specifier and writes
 // to the global logger's standard writer.
 func Infof(format string, a ...interface{}) {
-	fmt.Fprintf(log.standardOutput, format, a...)
+	log.Infof(format, a...)
 }
 
 // Debug writes a debug log on the logger's standard writer if
@@ -121,11 +121,7 @@ func (l Logger) Debug(a ...interface{}) {
 // Debug writes a debug log on the global logger's standard writer if
 // the debug logs are enabled.
 func Debug(a ...interface{}) {
-	if !log.debug {
-		return
-	}
-
-	fmt.Fprint(log.standardOutput, a...)
+	log.Debug(a...)
 }
 
 // Debugln writes a debug log on the logger's standard writer if
@@ -141,11 +137,7 @@ func (l Logger) Debugln(a ...interface{}) {
 // Debugln writes a debug log on the global logger's standard writer if
 // the debug logs are enabled and appends a newline to its input.
 func Debugln(a ...interface{}) {
-	if !log.debug {
-		return
-	}
-
-	fmt.Fprintln(log.standardOutput, a...)
+	log.Debugln(a...)
 }
 
 // Debugf formats according to a format specifier and writes
@@ -161,11 +153,7 @@ func (l Logger) Debugf(format string, a ...interface{}) {
 // Debugf formats according to a format specifier and writes
 // to the global logger's standard writer if the debug logs are enabled.
 func Debugf(format string, a ...interface{}) {
-	if !log.debug {
-		return
-	}
-
-	fmt.Fprintf(log.standardOutput, format, a...)
+	log.Debugf(format, a...)
 }
 
 // Error writes an error log on the logger's error writer.
@@ -175,7 +163,7 @@ func (l Logger) Error(a ...interface{}) {
 
 // Error writes an error log on the global logger's error writer.
 func Error(a ...interface{}) {
-	fmt.Fprint(log.errorOutput, a...)
+	log.Error(a...)
 }
 
 // Errorln writes an error log on the logger's error writer.
@@ -187,7 +175,7 @@ func (l Logger) Errorln(a ...interface{}) {
 // Errorln writes an error log on the global logger's error writer.
 // It appends a newline to its input.
 func Errorln(a ...interface{}) {
-	fmt.Fprintln(log.errorOutput, a...)
+	log.Errorln(a...)
 }
 
 // Errorf formats according to a format specifier and writes
@@ -199,5 +187,5 @@ func (l Logger) Errorf(format string, a ...interface{}) {
 // Errorf formats according to a format specifier and writes
 // to the global logger's error writer.
 func Errorf(format string, a ...interface{}) {
-	fmt.Fprintf(log.errorOutput, format, a...)
+	log.Errorf(format, a...)
 }
