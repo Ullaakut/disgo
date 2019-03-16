@@ -1,7 +1,7 @@
 // Package symbol contains a few cherry-picked UTF-8 symbols to be
 // used to build user-friendly command-line interfaces.
 // They are all colorless so that they can be used along
-// with `disgo/logger`'s formatting helpers.
+// with `disgo/console`'s formatting helpers.
 package symbol
 
 const (
