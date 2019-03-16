@@ -1,15 +1,16 @@
-// Package disgo is a logging and prompting library for
+// Package disgo is a console output and prompting library for
 // modern command line interfaces.
 //
-// It does not provide sutructed logging and is not built
+// It does not provide structured logging and is not built
 // with performance in mind, since it is aimed at building
 // user-friendly command line interfaces, and not applications.
 //
 // The packages that compose disgo can be used independently.
 //
-// The logger pakage (github.com/Ullaakut/disgo/logger) is a
-// simplified logger which only handles two basic log levels
-// (standard and debug).
+// The console package (github.com/Ullaakut/disgo/console) is a
+// simplified console output library which only handles two basic
+// output levels (standard and debug), and can also manage outputs
+// for step-by-step processes as well as formatting outputs.
 //
 // The prompter package (github.com/Ullaakut/disgo/prompter)
 // is a simple user prompter that asks users for input data
