@@ -26,3 +26,15 @@ Disgo provides four essential features for most user-friendly CLI applications:
 2. Output formatting (in `github.com/Ullaakut/disgo/console`)
 3. Step-by-step outputs (in `github.com/Ullaakut/disgo/console`)
 4. Simple user prompting (in `github.com/Ullaakut/disgo/prompter`)
+
+<p align="center">
+    <img src="images/example_error.png" />
+</p>
+
+<p align="center">
+    <img src="images/example_success.png" />
+</p>
+
+<p align="center">
+    <img src="images/example_invalid_user_input.png" />
+</p>
