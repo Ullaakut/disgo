@@ -27,6 +27,20 @@ Disgo provides four essential features for most user-friendly CLI applications:
 3. Step-by-step outputs (in `github.com/ullaakut/disgo/console`)
 4. Simple user prompting (in `github.com/ullaakut/disgo/prompter`)
 
+## Table of content
+
+1. [Console Package](#console-package)
+    1. [Console options](#console-options)
+    2. [Writing to the Console](#writing-to-the-console)
+    3. [Output Formatting](#output-formatting)
+    4. [Step-by-step processes](#step-by-step-processes)
+2. [Prompter Package](#prompter-package)
+    1. [Confirmation prompt](#confirmation-prompt)
+    2. [String input prompt](#string-input-prompt)
+3. [Symbol Package](#symbol-package)
+4. [Examples](#examples)
+5. [License](#license)
+
 ## Console package
 
 The console package provides an idiomatic library to build user-friendly command-line interfaces.
@@ -54,7 +68,7 @@ Or, if you are using the global console, you will simply need to call the `SetGl
     console.SetGlobalOptions(console.WithDebug(true))
 ```
 
-### Writing to the console
+### Writing to the Console
 
 Now that your console is set up, you can start writing on it. Printing functions behave idiomatically, like you would expect.
 
@@ -129,7 +143,7 @@ You can of course combine those formats in elegant ways, like shown in the [exam
 
 ### Step-by-step processes
 
-A lot of command-line interfaces describe step-by-step processes to the user, but it's difficult to combine clean code, clear output and elegant user interfaces. Disgo attempts to solve that problem by associating _steps_ to its console.
+A lot of command-line interfaces describe **step-by-step processes** to the user, but it's difficult to combine clean code, clear output and elegant user interfaces. Disgo attempts to solve that problem by associating _steps_ to its console.
 
 For example, when beginning a task, you can use `StartStep` and specify the description of that step. Then, until that task is over, all calls to Disgo's printing functions will be queued. Once the task is complete (by calling `EndStep`, `FailStep` or by starting another step with `StartStep`), the task status is printed and all of the outputs that were queued during the task are printed with an indent, under the task, like so:
 
@@ -137,7 +151,7 @@ For example, when beginning a task, you can use `StartStep` and specify the desc
     <img width="70%" src="images/example_step_by_step.png" />
 </p>
 
-It is also important to note that `FailStep` and `FailStepf` can return errors at the same time as they report a step as having failed. This allows you to write:
+It is also important to note that **`FailStep` and `FailStepf` can be used to return errors** at the same time as they report a step as having failed. This allows you to write:
 
 ```go
     console.StartStep("Doing something")
@@ -156,7 +170,7 @@ The prompter package is not yet complete, as it only handles confirmation prompt
 
 ### Confirmation prompt
 
-The confirmation prompt lets you prompt your user for a yes or no answer.
+The confirmation prompt lets you **prompt users** for a yes or no answer.
 
 ```go
     result, err := prompter.Confirm(prompter.Confirmation{
@@ -184,7 +198,7 @@ The confirmation prompt supports default values, like so:
 
 This will set the default value to false, so that when the user does not have access to a TTY or that he simply presses enter to skip the prompt, a value of your choosing is used.
 
-It's also possible to add your own confirmation parsers, if you don't want the user to answer to a yes/no question for example. This also means that you can customize the choices that will be presented to the user:
+It's also possible to add **your own confirmation parsers**, if you don't want the user to answer to a yes/no question for example. This also means that you can customize the choices that will be presented to the user:
 
 ```go
     result, err := prompter.Confirm(prompter.Confirmation{
@@ -217,7 +231,7 @@ Not implemented yet.
 
 ## Symbol package
 
-The symbol package provides aliases to UTF-8 characters that could be useful to build your command-line interfaces.
+The symbol package provides **aliases to UTF-8 characters** that could be useful to build your command-line interfaces.
 
 ```go
     console.Infoln(symbol.Check) // ✔
@@ -237,3 +251,27 @@ Here are a few examples of Disgo's output, using this repository's example progr
     <img width="70%" src="images/example_failure.png" /><br/>
     <img width="70%" src="images/example_failure_prompt.png" />
 </p>
+
+## License
+
+MIT License
+
+Copyright (c) 2019
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
