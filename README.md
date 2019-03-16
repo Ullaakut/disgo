@@ -122,7 +122,7 @@ Another feature provided by this package is **output formatting**. It exposes si
 Other output formats include `Success`, `Trace`, `Important` and `Link`.
 
 <p align="center">
-    <img src="images/output_all.png" />
+    <img width="40%" src="images/output_all.png" />
 </p>
 
 You can of course combine those formats in elegant ways, like shown in the [examples](#examples) section.
@@ -134,7 +134,7 @@ A lot of command-line interfaces describe step-by-step processes to the user, bu
 For example, when beginning a task, you can use `StartStep` and specify the description of that step. Then, until that task is over, all calls to Disgo's printing functions will be queued. Once the task is complete (by calling `EndStep`, `FailStep` or by starting another step with `StartStep`), the task status is printed and all of the outputs that were queued during the task are printed with an indent, under the task, like so:
 
 <p align="center">
-    <img src="images/example_step_by_step.png" />
+    <img width="70%" src="images/example_step_by_step.png" />
 </p>
 
 It is also important to note that `FailStep` and `FailStepf` can return errors at the same time as they report a step as having failed. This allows you to write:
@@ -150,19 +150,90 @@ Instead of having to call `FailStep` in your error handling before returning. Yo
 
 Using the global console for step management is not thread-safe though, as it was built with simplicity in mind and can only handle one step at a time.
 
+## Prompter package
+
+The prompter package is not yet complete, as it only handles confirmation prompts for now. Its goal is to provide simple functions to prompt users for information.
+
+### Confirmation prompt
+
+The confirmation prompt lets you prompt your user for a yes or no answer.
+
+```go
+    result, err := prompter.Confirm(prompter.Confirmation{
+        Label:              "Install with current database?",
+    })
+```
+
+Will produce the following output:
+
+```bash
+Install with current database? [y/n]
+```
+
+To which the user can answer by `y`, `n`, `Y`, `N`, `yes`, `no`, `YES,` `NO`, `0`, `1`, `true`, `false`, etc.
+
+The confirmation prompt supports default values, like so:
+
+```go
+    result, err := prompter.Confirm(prompter.Confirmation{
+        EnableDefaultValue: true,
+        DefaultValue:       false,
+        Label:              "Install with current database?",
+    })
+```
+
+This will set the default value to false, so that when the user does not have access to a TTY or that he simply presses enter to skip the prompt, a value of your choosing is used.
+
+It's also possible to add your own confirmation parsers, if you don't want the user to answer to a yes/no question for example. This also means that you can customize the choices that will be presented to the user:
+
+```go
+    result, err := prompter.Confirm(prompter.Confirmation{
+        Label:              "Install with current database?",
+        Choices:            []string{"yes", "no"},
+        Parser:             func(input string) (bool, error) {
+            switch input {
+            case "yes":
+                return true, nil
+            case "no":
+                return false, nil
+            default:
+                return false, fmt.Errorf("invalid input %q", input)
+            }
+        },
+    })
+```
+
+This will output:
+
+```bash
+Install with current database? [yes/no]
+```
+
+And will use a custom parser for parsing the user's answer.
+
+### String input prompt
+
+Not implemented yet.
+
+## Symbol package
+
+The symbol package provides aliases to UTF-8 characters that could be useful to build your command-line interfaces.
+
+```go
+    console.Infoln(symbol.Check) // ✔
+    console.Infoln(symbol.Cross) // ✖
+    console.Infoln(symbol.LeftArrow) // ❮
+    console.Infoln(symbol.RightArrow) // ❯
+    console.Infoln(symbol.LeftTriangle) // ◀
+    console.Infoln(symbol.RightTriangle) // ▶
+```
+
 ## Examples
 
 Here are a few examples of Disgo's output, using this repository's example program:
 
 <p align="center">
-    <img src="images/example_success.png" /><br/>
-    <img src="images/example_failure.png" /><br/>
-    <img src="images/example_failure_prompt.png" />
-</p>
-
-Disgo is also used in other projects, here are some examples:
-
-<p align="center">
-    <img src="https://raw.githubusercontent.com/Ullaakut/cameradar/master/images/Cameradar.gif" />
-    <img src="https://raw.githubusercontent.com/Ullaakut/Gorsair/master/images/gorsair.gif" />
+    <img width="70%" src="images/example_success.png" /><br/>
+    <img width="70%" src="images/example_failure.png" /><br/>
+    <img width="70%" src="images/example_failure_prompt.png" />
 </p>
