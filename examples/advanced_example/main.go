@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/Ullaakut/disgo/prompter"
-	"github.com/Ullaakut/disgo/symbol"
 	"github.com/ullaakut/disgo/console"
+	"github.com/ullaakut/disgo/prompter"
+	"github.com/ullaakut/disgo/symbol"
 )
 
 // Produces the following output on success:

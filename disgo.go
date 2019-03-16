@@ -7,16 +7,16 @@
 //
 // The packages that compose disgo can be used independently.
 //
-// The console package (github.com/Ullaakut/disgo/console) is a
+// The console package (github.com/ullaakut/disgo/console) is a
 // simplified console output library which only handles two basic
 // output levels (standard and debug), and can also manage outputs
 // for step-by-step processes as well as formatting outputs.
 //
-// The prompter package (github.com/Ullaakut/disgo/prompter)
+// The prompter package (github.com/ullaakut/disgo/prompter)
 // is a simple user prompter that asks users for input data
 // or confirmations.
 //
-// The symbol package (github.com/Ullaakut/disgo/symbol)
+// The symbol package (github.com/ullaakut/disgo/symbol)
 // provides access to cherry-picked UTF-8 symbols that are
 // useful for making user-friendly command line interfaces.
 package disgo
