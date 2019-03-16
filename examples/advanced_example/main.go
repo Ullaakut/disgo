@@ -33,6 +33,7 @@ func main() {
 
 	if err := install(); err != nil {
 		console.Errorln(console.Failure(err))
+		console.Infoln(console.Failure(symbol.Cross), "Installation failed")
 		os.Exit(1)
 	}
 
