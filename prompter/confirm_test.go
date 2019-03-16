@@ -90,7 +90,7 @@ func TestPrompterConfirm(t *testing.T) {
 			_, err := in.Write(append([]byte(test.input), '\n'))
 			require.NoError(t, err)
 
-			subject := New(&out, &in, true)
+			subject := New(WithReader(&in), WithWriter(&out))
 
 			result, err := subject.Confirm(Confirmation{
 				Label:              test.prompt,
@@ -135,7 +135,7 @@ func TestReadError(t *testing.T) {
 	_, err := in.Write(append([]byte("user input"), '\n'))
 	require.NoError(t, err)
 
-	subject := New(&out, &in, true)
+	subject := New(WithReader(&in), WithWriter(&out))
 
 	_, err = subject.Confirm(Confirmation{
 		Label: "label",
@@ -149,7 +149,7 @@ func TestNonInteractivePrompter(t *testing.T) {
 	in := readerMock{}
 	out := bytes.Buffer{}
 
-	subject := New(&out, &in, false)
+	subject := New(WithReader(&in), WithWriter(&out), WithInteractive(false))
 
 	value, err := subject.Confirm(Confirmation{
 		Label:        "label",

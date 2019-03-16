@@ -7,7 +7,8 @@ import (
 )
 
 var (
-	// DefaultConfirmationChoices is the default value for the choices that are given to
+	// DefaultConfirmationChoices is the default value
+	// for the choices that are given to
 	// the users in a confirmation prompt.
 	DefaultConfirmationChoices = []string{"y", "n"}
 )
@@ -75,7 +76,8 @@ func (c Confirmation) choices() string {
 
 // Confirm prompts the user to confirm something.
 func (p Prompter) Confirm(config Confirmation) (bool, error) {
-	// If prompter is not set to interactive, directly return the default value.
+	// If prompter is not set to interactive,
+	// directly return the default value.
 	if !p.interactive {
 		return config.DefaultValue, nil
 	}
@@ -96,4 +98,10 @@ func (p Prompter) Confirm(config Confirmation) (bool, error) {
 
 	// Parse user input.
 	return config.parser()(strings.TrimSpace(text))
+}
+
+// Confirm prompts the user to confirm something
+// using the global prompt.
+func Confirm(config Confirmation) (bool, error) {
+	return prompt.Confirm(config)
 }
