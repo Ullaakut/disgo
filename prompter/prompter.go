@@ -5,7 +5,14 @@ package prompter
 import (
 	"bufio"
 	"io"
+	"os"
 )
+
+var prompt *Prompter
+
+func init() {
+	prompt = New()
+}
 
 // Prompter prompts users to let them input data, and parses it.
 type Prompter struct {
@@ -30,10 +37,46 @@ type Prompter struct {
 // them.
 // This should be used if your users are not in a TTY and can't
 // write to answer to the prompt.
-func New(w io.Writer, r io.Reader, interactive bool) *Prompter {
-	return &Prompter{
-		writer:      w,
-		reader:      bufio.NewReader(r),
-		interactive: interactive,
+func New(options ...func(*Prompter)) *Prompter {
+	p := &Prompter{
+		writer:      os.Stdout,
+		reader:      bufio.NewReader(os.Stdin),
+		interactive: true,
+	}
+
+	for _, option := range options {
+		option(p)
+	}
+
+	return p
+}
+
+// WithWriter sets the writer on the prompter. By default, if this
+// option is not used, the default writer will be os.Stdout.
+func WithWriter(writer io.Writer) func(*Prompter) {
+	return func(prompter *Prompter) {
+		prompter.writer = writer
+	}
+}
+
+// WithReader sets the reader on the prompter. By default, if this
+// option is not used, the default reader will be os.Stdin.
+func WithReader(reader io.Reader) func(*Prompter) {
+	return func(prompter *Prompter) {
+		prompter.reader = bufio.NewReader(reader)
+	}
+}
+
+// WithInteractive enables or disables the prompter interactive mode.
+func WithInteractive(enabled bool) func(*Prompter) {
+	return func(prompter *Prompter) {
+		prompter.interactive = enabled
+	}
+}
+
+// SetGlobalOptions applies options to the global prompter.
+func SetGlobalOptions(options ...func(*Prompter)) {
+	for _, option := range options {
+		option(prompt)
 	}
 }
