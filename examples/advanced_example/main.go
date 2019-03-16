@@ -51,11 +51,6 @@ func install() error {
 	console.Infoln("Local store up to date with remote database")
 	console.EndStep()
 
-	console.Errorln(console.Failure("Database connection lost"))
-
-	console.StartStep("Connecting to fallback database")
-	console.EndStep()
-
 	console.Debugln("Dashboard deployed at", console.Link("https://172.187.10.23:37356/dashboard"))
 
 	result, err := prompter.Confirm(prompter.Confirmation{
