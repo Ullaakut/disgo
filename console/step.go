@@ -8,7 +8,8 @@ import (
 type outputLevel int
 
 const (
-	levelStandard outputLevel = iota
+	levelDebug outputLevel = iota
+	levelInfo
 	levelError
 )
 
@@ -21,9 +22,16 @@ type step struct {
 	queue []stepOutput
 }
 
-func (s *step) pushStandard(content string) {
+func (s *step) pushDebug(content string) {
 	s.queue = append(s.queue, stepOutput{
-		level:   levelStandard,
+		level:   levelDebug,
+		content: content,
+	})
+}
+
+func (s *step) pushInfo(content string) {
+	s.queue = append(s.queue, stepOutput{
+		level:   levelInfo,
 		content: content,
 	})
 }
@@ -144,10 +152,15 @@ func (c Console) printQueue() {
 		output.content = strings.Replace(output.content, "\n", "\n    ", -1)
 
 		// Print the output on the proper writer.
-		if output.level == levelError {
-			fmt.Fprintf(c.errorOutput, "  > %s\n", Failure(output.content))
-		} else if c.debug {
+		switch output.level {
+		case levelDebug:
+			if c.debug {
+				fmt.Fprintf(c.defaultOutput, "  > %s\n", Trace(output.content))
+			}
+		case levelInfo:
 			fmt.Fprintf(c.defaultOutput, "  > %s\n", Trace(output.content))
+		case levelError:
+			fmt.Fprintf(c.errorOutput, "  > %s\n", Failure(output.content))
 		}
 	}
 }

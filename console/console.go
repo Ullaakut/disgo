@@ -90,7 +90,7 @@ func SetGlobalOptions(options ...func(*Console)) {
 // Info writes an info output on the console's default writer.
 func (c Console) Info(a ...interface{}) {
 	if c.step != nil {
-		c.step.pushStandard(fmt.Sprint(a...))
+		c.step.pushInfo(fmt.Sprint(a...))
 		return
 	}
 
@@ -106,7 +106,7 @@ func Info(a ...interface{}) {
 // and appends a newline to its input.
 func (c Console) Infoln(a ...interface{}) {
 	if c.step != nil {
-		c.step.pushStandard(fmt.Sprintln(a...))
+		c.step.pushInfo(fmt.Sprintln(a...))
 		return
 	}
 
@@ -123,7 +123,7 @@ func Infoln(a ...interface{}) {
 // to the console's default writer.
 func (c Console) Infof(format string, a ...interface{}) {
 	if c.step != nil {
-		c.step.pushStandard(fmt.Sprintf(format, a...))
+		c.step.pushInfo(fmt.Sprintf(format, a...))
 		return
 	}
 
@@ -144,7 +144,7 @@ func (c Console) Debug(a ...interface{}) {
 	}
 
 	if c.step != nil {
-		c.step.pushStandard(fmt.Sprint(a...))
+		c.step.pushDebug(fmt.Sprint(a...))
 		return
 	}
 
@@ -165,7 +165,7 @@ func (c Console) Debugln(a ...interface{}) {
 	}
 
 	if c.step != nil {
-		c.step.pushStandard(fmt.Sprintln(a...))
+		c.step.pushDebug(fmt.Sprintln(a...))
 		return
 	}
 
@@ -186,7 +186,7 @@ func (c Console) Debugf(format string, a ...interface{}) {
 	}
 
 	if c.step != nil {
-		c.step.pushStandard(fmt.Sprintf(format, a...))
+		c.step.pushDebug(fmt.Sprintf(format, a...))
 		return
 	}
 
