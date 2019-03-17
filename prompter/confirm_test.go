@@ -164,3 +164,22 @@ func TestNonInteractivePrompter(t *testing.T) {
 	// it returns the default value.
 	assert.Equal(t, true, value)
 }
+
+func TestGlobalPrompter(t *testing.T) {
+	in := bytes.Buffer{}
+	out := bytes.Buffer{}
+
+	_, err := in.Write(append([]byte("y"), '\n'))
+	require.NoError(t, err)
+
+	SetGlobalOptions(WithReader(&in), WithWriter(&out))
+
+	_, err = Confirm(Confirmation{
+		Label:        "label",
+		DefaultValue: true,
+	})
+
+	// Ensure that when the prompter is set to non-interactive,
+	// it returns no error.
+	assert.NoError(t, err)
+}
