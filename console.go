@@ -1,7 +1,4 @@
-// Package console is a simplified command line interface
-// TODO: Finish this sentence
-// which only handles two basic output levels.
-package console
+package disgo
 
 import (
 	"fmt"
@@ -14,7 +11,7 @@ import (
 var cnsl *Console
 
 func init() {
-	cnsl = New()
+	cnsl = NewConsole()
 }
 
 // Console represents a disgo Console.
@@ -36,8 +33,8 @@ type Console struct {
 	debug bool
 }
 
-// New creates a new Console and binds the given writer to its outputs.
-func New(options ...func(*Console)) *Console {
+// NewConsole creates a new Console and binds the given writer to its outputs.
+func NewConsole(options ...func(*Console)) *Console {
 	console := Console{
 		defaultOutput: os.Stdout,
 		errorOutput:   os.Stderr,
@@ -80,8 +77,8 @@ func WithColors(enabled bool) func(*Console) {
 	}
 }
 
-// SetGlobalOptions applies options to the global console.
-func SetGlobalOptions(options ...func(*Console)) {
+// SetupGlobalConsole applies options to the global console.
+func SetupGlobalConsole(options ...func(*Console)) {
 	for _, option := range options {
 		option(cnsl)
 	}
