@@ -1,6 +1,4 @@
-// Package prompter is a simple user prompter that asks users
-// for input data or confirmations.
-package prompter
+package disgo
 
 import (
 	"bufio"
@@ -11,7 +9,7 @@ import (
 var prompt *Prompter
 
 func init() {
-	prompt = New()
+	prompt = NewPrompter()
 }
 
 // Prompter prompts users to let them input data, and parses it.
@@ -31,13 +29,13 @@ type Prompter struct {
 	interactive bool
 }
 
-// New instantiates a new prompter which will prompt users on the writer
+// NewPrompter instantiates a new prompter which will prompt users on the writer
 // and read their output from the reader. The interactive boolean makes
 // all prompts return a default value if set to false, and won't prompt
 // them.
 // This should be used if your users are not in a TTY and can't
 // write to answer to the prompt.
-func New(options ...func(*Prompter)) *Prompter {
+func NewPrompter(options ...func(*Prompter)) *Prompter {
 	p := &Prompter{
 		writer:      os.Stdout,
 		reader:      bufio.NewReader(os.Stdin),
@@ -74,8 +72,8 @@ func WithInteractive(enabled bool) func(*Prompter) {
 	}
 }
 
-// SetGlobalOptions applies options to the global prompter.
-func SetGlobalOptions(options ...func(*Prompter)) {
+// SetupGlobalPrompter applies options to the global prompter.
+func SetupGlobalPrompter(options ...func(*Prompter)) {
 	for _, option := range options {
 		option(prompt)
 	}
