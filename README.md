@@ -22,28 +22,28 @@ Simple console output library for Go command-line interfaces.
 
 Disgo provides four essential features for most user-friendly CLI applications:
 
-1. Simple output levels (in `github.com/ullaakut/disgo/console`)
-2. Output formatting (in `github.com/ullaakut/disgo/console`)
-3. Step-by-step outputs (in `github.com/ullaakut/disgo/console`)
-4. Simple user prompting (in `github.com/ullaakut/disgo/prompter`)
+1. Simple output levels
+2. Output formatting
+3. Step-by-step outputs
+4. Simple user prompting
 
 ## Table of content
 
-1. [Console Package](#console-package)
+1. [Console](#console)
     1. [Console options](#console-options)
     2. [Writing to the Console](#writing-to-the-console)
     3. [Output Formatting](#output-formatting)
     4. [Step-by-step processes](#step-by-step-processes)
-2. [Prompter Package](#prompter-package)
+    5. [Symbols](#symbols)
+2. [Prompter](#prompter)
     1. [Confirmation prompt](#confirmation-prompt)
     2. [String input prompt](#string-input-prompt)
-3. [Symbol Package](#symbol-package)
-4. [Examples](#examples)
-5. [License](#license)
+3. [Examples](#examples)
+4. [License](#license)
 
-## Console package
+## Console
 
-The console package provides an idiomatic library to build user-friendly command-line interfaces.
+The disgo `Console` provides an idiomatic way to build user-friendly command-line interfaces.
 
 You can use it globally within your application, or you can instantiate your own `Console`.
 
@@ -56,23 +56,23 @@ When creating a `Console` instance or when using the global `Console` that this 
 - **`WithErrorWriter`**, which lets you specify an `io.Writer` on which `Error`-level outputs should be written _(it is set to `os.Stderr` by default)_
 - **`WithColors`**, which lets you explicitely enable or disable colors in your output _(it is enabled by default)_
 
-You can either pass those options to `console.New()` when creating a `Console` instance, like so:
+You can either pass those options to `disgo.New()` when creating a `Console` instance, like so:
 
 ```go
-    myConsole := console.New(console.WithDebug(true))
+    myConsole := disgo.New(disgo.WithDebug(true))
 ```
 
-Or, if you are using the global console, you will simply need to call the `SetGlobalOptions` function:
+Or, if you are using the global disgo, you will simply need to call the `SetupGlobalConsole` function:
 
 ```go
-    console.SetGlobalOptions(console.WithDebug(true))
+    disgo.SetupGlobalConsole(disgo.WithDebug(true))
 ```
 
 ### Writing to the Console
 
-Now that your console is set up, you can start writing on it. Printing functions behave idiomatically, like you would expect.
+Now that your disgo is set up, you can start writing on it. Printing functions behave idiomatically, like you would expect.
 
-Here is how to use them on a local console:
+Here is how to use them on a local disgo:
 
 ```go
     // All of those give the same output:
@@ -95,36 +95,36 @@ Here is how to use them on a local console:
     myConsole.Error("Number of days in a year: 365\n")
 ```
 
-When using the global console, simply call the console printing functions directly:
+When using the global console, call the console printing functions directly:
 
 ```go
     // All of those give the same output:
     // "Number of days in a year: 365" followed by a newline.
-    console.Infoln("Number of days in a year:", 365)
-    console.Infof("Number of days in a year: %d\n", 365)
-    console.Info("Number of days in a year: 365\n")
+    disgo.Infoln("Number of days in a year:", 365)
+    disgo.Infof("Number of days in a year: %d\n", 365)
+    disgo.Info("Number of days in a year: 365\n")
 
     // Debug methods are similar to info, except that they are not printed
     // if debug outputs are not enabled on the console.
-    console.Debugln("Number of days in a year:", 365)
-    console.Debugf("Number of days in a year: %d\n", 365)
-    console.Debug("Number of days in a year: 365\n")
+    disgo.Debugln("Number of days in a year:", 365)
+    disgo.Debugf("Number of days in a year: %d\n", 365)
+    disgo.Debug("Number of days in a year: 365\n")
 
 
     // Error methods are similar to info, except that they are written on
     // the error writer (os.Stderr by default).
-    console.Errorln("Number of days in a year:", 365)
-    console.Errorf("Number of days in a year: %d\n", 365)
-    console.Error("Number of days in a year: 365\n")
+    disgo.Errorln("Number of days in a year:", 365)
+    disgo.Errorf("Number of days in a year: %d\n", 365)
+    disgo.Error("Number of days in a year: 365\n")
 ```
 
 ### Output Formatting
 
-Another feature provided by this package is **output formatting**. It exposes six different output formats, which will print an output with a specific color, font-weight and font-style depending on what the output's content should convey to the user. For example, if you want to attract a user's attention to an error, you might use the `console.Failure()` formatting function, like so:
+Another feature provided by this package is **output formatting**. It exposes six different output formats, which will print an output with a specific color, font-weight and font-style depending on what the output's content should convey to the user. For example, if you want to attract a user's attention to an error, you might use the `disgo.Failure()` formatting function, disgo so:
 
 ```go
     if err := validateConfiguration; err != nil {
-        console.Errorln("Invalid configuration detected:", console.Failure(err))
+        disgo.Errorln("Invalid configuration detected:", disgo.Failure(err))
         return err
     }
 ```
@@ -154,9 +154,9 @@ For example, when beginning a task, you can use `StartStep` and specify the desc
 It is also important to note that **`FailStep` and `FailStepf` can be used to return errors** at the same time as they report a step as having failed. This allows you to write:
 
 ```go
-    console.StartStep("Doing something")
+    disgo.StartStep("Doing something")
     if err := doSomething(); err != nil {
-        return console.FailStepf("unable to do something: %v", err)
+        return disgo.FailStepf("unable to do something: %v", err)
     }
 ```
 
@@ -164,16 +164,16 @@ Instead of having to call `FailStep` in your error handling before returning. Yo
 
 Using the global console for step management is not thread-safe though, as it was built with simplicity in mind and can only handle one step at a time.
 
-## Prompter package
+## Prompter
 
-The prompter package is not yet complete, as it only handles confirmation prompts for now. Its goal is to provide simple functions to prompt users for information.
+The `Prompter` is not yet complete, as it only handles confirmation prompts for now. Its goal is to provide simple functions to prompt users for information.
 
 ### Confirmation prompt
 
 The confirmation prompt lets you **prompt users** for a yes or no answer.
 
 ```go
-    result, err := prompter.Confirm(prompter.Confirmation{
+    result, err := disgo.Confirm(disgo.Confirmation{
         Label:              "Install with current database?",
     })
 ```
@@ -189,7 +189,7 @@ To which the user can answer by `y`, `n`, `Y`, `N`, `yes`, `no`, `YES,` `NO`, `0
 The confirmation prompt supports default values, like so:
 
 ```go
-    result, err := prompter.Confirm(prompter.Confirmation{
+    result, err := disgo.Confirm(disgo.Confirmation{
         EnableDefaultValue: true,
         DefaultValue:       false,
         Label:              "Install with current database?",
@@ -201,7 +201,7 @@ This will set the default value to false, so that when the user does not have ac
 It's also possible to add **your own confirmation parsers**, if you don't want the user to answer to a yes/no question for example. This also means that you can customize the choices that will be presented to the user:
 
 ```go
-    result, err := prompter.Confirm(prompter.Confirmation{
+    result, err := disgo.Confirm(disgo.Confirmation{
         Label:              "Install with current database?",
         Choices:            []string{"yes", "no"},
         Parser:             func(input string) (bool, error) {
@@ -229,17 +229,17 @@ And will use a custom parser for parsing the user's answer.
 
 Not implemented yet.
 
-## Symbol package
+## Symbols
 
-The symbol package provides **aliases to UTF-8 characters** that could be useful to build your command-line interfaces.
+Disgo provides **aliases to UTF-8 characters** that could be useful to build your command-line interfaces.
 
 ```go
-    console.Infoln(symbol.Check) // ✔
-    console.Infoln(symbol.Cross) // ✖
-    console.Infoln(symbol.LeftArrow) // ❮
-    console.Infoln(symbol.RightArrow) // ❯
-    console.Infoln(symbol.LeftTriangle) // ◀
-    console.Infoln(symbol.RightTriangle) // ▶
+    disgo.Infoln(disgo.Check) // ✔
+    disgo.Infoln(disgo.Cross) // ✖
+    disgo.Infoln(disgo.LeftArrow) // ❮
+    disgo.Infoln(disgo.RightArrow) // ❯
+    disgo.Infoln(disgo.LeftTriangle) // ◀
+    disgo.Infoln(disgo.RightTriangle) // ▶
 ```
 
 ## Examples
