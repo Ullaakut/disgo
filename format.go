@@ -1,4 +1,4 @@
-package console
+package disgo
 
 import (
 	"github.com/fatih/color"
