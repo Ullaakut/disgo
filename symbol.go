@@ -1,9 +1,9 @@
-// Package symbol contains a few cherry-picked UTF-8 symbols to be
+package disgo
+
+// This file contains a few cherry-picked UTF-8 symbols to be
 // used to build user-friendly command-line interfaces.
 // They are all colorless so that they can be used along
-// with `disgo/console`'s formatting helpers.
-package symbol
-
+// with disgo's formatting helpers.
 const (
 	// Check displays ✔
 	Check = "\xe2\x9c\x94"
