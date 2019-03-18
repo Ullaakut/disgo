@@ -5,9 +5,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/ullaakut/disgo/console"
-	"github.com/ullaakut/disgo/prompter"
-	"github.com/ullaakut/disgo/symbol"
+	"github.com/ullaakut/disgo"
 )
 
 // Produces the following output on success:
@@ -29,52 +27,52 @@ import (
 // ✔ Installation successful
 
 func main() {
-	console.SetGlobalOptions(console.WithDebug(true))
+	disgo.SetupGlobalConsole(disgo.WithDebug(true))
 
 	if err := install(); err != nil {
-		console.Errorln(console.Failure(err))
-		console.Infoln(console.Failure(symbol.Cross), "Installation failed")
+		disgo.Errorln(disgo.Failure(err))
+		disgo.Infoln(disgo.Failure(disgo.Cross), "Installation failed")
 		os.Exit(1)
 	}
 
-	console.Infoln(console.Success(symbol.Check), "Installation successful")
+	disgo.Infoln(disgo.Success(disgo.Check), "Installation successful")
 }
 
 func install() error {
-	console.Infoln("Looking for remote database on", console.Link("172.187.10.23"))
+	disgo.Infoln("Looking for remote database on", disgo.Link("172.187.10.23"))
 
-	console.StartStep("Accessing database")
+	disgo.StartStep("Accessing database")
 
-	console.StartStep("Checking database integrity")
+	disgo.StartStep("Checking database integrity")
 
-	console.StartStep("Synchronizing local store")
-	console.Infoln("Local store up to date with remote database")
-	console.EndStep()
+	disgo.StartStep("Synchronizing local store")
+	disgo.Infoln("Local store up to date with remote database")
+	disgo.EndStep()
 
-	console.Debugln("Dashboard deployed at", console.Link("https://172.187.10.23:37356/dashboard"))
+	disgo.Debugln("Dashboard deployed at", disgo.Link("https://172.187.10.23:37356/dashboard"))
 
-	result, err := prompter.Confirm(prompter.Confirmation{
+	result, err := disgo.Confirm(disgo.Confirmation{
 		Label:              "Install with current database?",
 		EnableDefaultValue: true,
 		DefaultValue:       true,
 		Choices:            []string{"Y", "n"},
 	})
 	if err != nil {
-		return fmt.Errorf("Unexpected user input: %s", console.Failure(err))
+		return fmt.Errorf("Unexpected user input: %s", disgo.Failure(err))
 	}
 
-	console.StartStep("Installation in progress")
+	disgo.StartStep("Installation in progress")
 
 	if result {
-		console.Infoln("Installing with current database")
+		disgo.Infoln("Installing with current database")
 	} else {
-		return console.FailStep(errors.New("unable to install without a database"))
+		return disgo.FailStep(errors.New("unable to install without a database"))
 	}
 
-	console.Infoln("Connection to 172.187.10.23 secure")
-	console.Infoln("Found 36 dependency requirements")
-	console.Infoln("Dependencies resolved")
-	console.EndStep()
+	disgo.Infoln("Connection to 172.187.10.23 secure")
+	disgo.Infoln("Found 36 dependency requirements")
+	disgo.Infoln("Dependencies resolved")
+	disgo.EndStep()
 
 	return nil
 }
