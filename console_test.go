@@ -11,7 +11,7 @@ import (
 )
 
 func TestNewConsole(t *testing.T) {
-	console := New()
+	console := NewConsole()
 
 	assert.Equal(t, console.defaultOutput, os.Stdout)
 	assert.Equal(t, console.errorOutput, os.Stderr)
@@ -23,7 +23,7 @@ func TestNewConsoleWithOptions(t *testing.T) {
 	defaultOut := &bytes.Buffer{}
 	errorOut := &bytes.Buffer{}
 
-	console := New(WithDefaultOutput(defaultOut), WithErrorOutput(errorOut), WithDebug(true), WithColors(false))
+	console := NewConsole(WithDefaultOutput(defaultOut), WithErrorOutput(errorOut), WithDebug(true), WithColors(false))
 
 	assert.Equal(t, console.defaultOutput, defaultOut)
 	assert.Equal(t, console.errorOutput, errorOut)
@@ -36,7 +36,7 @@ func TestGlobalOptions(t *testing.T) {
 	defaultOut := &bytes.Buffer{}
 	errorOut := &bytes.Buffer{}
 
-	SetGlobalOptions(WithDefaultOutput(defaultOut), WithErrorOutput(errorOut), WithDebug(true), WithColors(false))
+	SetupGlobalConsole(WithDefaultOutput(defaultOut), WithErrorOutput(errorOut), WithDebug(true), WithColors(false))
 
 	assert.Equal(t, cnsl.defaultOutput, defaultOut)
 	assert.Equal(t, cnsl.errorOutput, errorOut)
@@ -304,7 +304,7 @@ func TestErrorfWithoutStep(t *testing.T) {
 func TestGlobalConsoleInfoWithoutStep(t *testing.T) {
 	defaultOut := &bytes.Buffer{}
 
-	SetGlobalOptions(WithDefaultOutput(defaultOut))
+	SetupGlobalConsole(WithDefaultOutput(defaultOut))
 
 	// Info should not append a newline after printing.
 	Info("one sentence")
@@ -324,7 +324,7 @@ func TestGlobalConsoleInfoWithoutStep(t *testing.T) {
 func TestGlobalConsoleInfolnWithoutStep(t *testing.T) {
 	defaultOut := &bytes.Buffer{}
 
-	SetGlobalOptions(WithDefaultOutput(defaultOut))
+	SetupGlobalConsole(WithDefaultOutput(defaultOut))
 
 	// Info should append a newline after printing.
 	Infoln("one sentence")
@@ -343,7 +343,7 @@ func TestGlobalConsoleInfolnWithoutStep(t *testing.T) {
 func TestGlobalConsoleInfofWithoutStep(t *testing.T) {
 	defaultOut := &bytes.Buffer{}
 
-	SetGlobalOptions(WithDefaultOutput(defaultOut))
+	SetupGlobalConsole(WithDefaultOutput(defaultOut))
 
 	// Infof should not append a newline after printing.
 	Infof("one sentence")
@@ -363,7 +363,7 @@ func TestGlobalConsoleInfofWithoutStep(t *testing.T) {
 func TestGlobalConsoleDebugEnabledWithoutStep(t *testing.T) {
 	defaultOut := &bytes.Buffer{}
 
-	SetGlobalOptions(WithDefaultOutput(defaultOut), WithDebug(true))
+	SetupGlobalConsole(WithDefaultOutput(defaultOut), WithDebug(true))
 
 	// Debug should not append a newline after printing.
 	Debug("one sentence")
@@ -383,7 +383,7 @@ func TestGlobalConsoleDebugEnabledWithoutStep(t *testing.T) {
 func TestGlobalConsoleDebuglnEnabledWithoutStep(t *testing.T) {
 	defaultOut := &bytes.Buffer{}
 
-	SetGlobalOptions(WithDefaultOutput(defaultOut), WithDebug(true))
+	SetupGlobalConsole(WithDefaultOutput(defaultOut), WithDebug(true))
 
 	// Debug should append a newline after printing.
 	Debugln("one sentence")
@@ -402,7 +402,7 @@ func TestGlobalConsoleDebuglnEnabledWithoutStep(t *testing.T) {
 func TestGlobalConsoleDebugfEnabledWithoutStep(t *testing.T) {
 	defaultOut := &bytes.Buffer{}
 
-	SetGlobalOptions(WithDefaultOutput(defaultOut), WithDebug(true))
+	SetupGlobalConsole(WithDefaultOutput(defaultOut), WithDebug(true))
 
 	// Debugf should not append a newline after printing.
 	Debugf("one sentence")
@@ -422,7 +422,7 @@ func TestGlobalConsoleDebugfEnabledWithoutStep(t *testing.T) {
 func TestGlobalConsoleDebugDisabledWithoutStep(t *testing.T) {
 	defaultOut := &bytes.Buffer{}
 
-	SetGlobalOptions(WithDefaultOutput(defaultOut), WithDebug(false))
+	SetupGlobalConsole(WithDefaultOutput(defaultOut), WithDebug(false))
 
 	// Debug should not output anything when debug is disabled.
 	Debug("one sentence")
@@ -436,7 +436,7 @@ func TestGlobalConsoleDebugDisabledWithoutStep(t *testing.T) {
 func TestGlobalConsoleDebuglnDisabledWithoutStep(t *testing.T) {
 	defaultOut := &bytes.Buffer{}
 
-	SetGlobalOptions(WithDefaultOutput(defaultOut), WithDebug(false))
+	SetupGlobalConsole(WithDefaultOutput(defaultOut), WithDebug(false))
 
 	// Debugln should not output anything when debug is disabled.
 	Debugln("one sentence")
@@ -450,7 +450,7 @@ func TestGlobalConsoleDebuglnDisabledWithoutStep(t *testing.T) {
 func TestGlobalConsoleDebugfDisabledWithoutStep(t *testing.T) {
 	defaultOut := &bytes.Buffer{}
 
-	SetGlobalOptions(WithDefaultOutput(defaultOut), WithDebug(false))
+	SetupGlobalConsole(WithDefaultOutput(defaultOut), WithDebug(false))
 
 	// Debugf should not output anything when debug is disabled.
 	Debugf("one sentence")
@@ -464,7 +464,7 @@ func TestGlobalConsoleDebugfDisabledWithoutStep(t *testing.T) {
 func TestGlobalConsoleErrorWithoutStep(t *testing.T) {
 	errorOut := &bytes.Buffer{}
 
-	SetGlobalOptions(WithDefaultOutput(ioutil.Discard), WithErrorOutput(errorOut))
+	SetupGlobalConsole(WithDefaultOutput(ioutil.Discard), WithErrorOutput(errorOut))
 
 	// Error should not append a newline after printing.
 	Error("one sentence")
@@ -484,7 +484,7 @@ func TestGlobalConsoleErrorWithoutStep(t *testing.T) {
 func TestGlobalConsoleErrorlnWithoutStep(t *testing.T) {
 	errorOut := &bytes.Buffer{}
 
-	SetGlobalOptions(WithDefaultOutput(ioutil.Discard), WithErrorOutput(errorOut))
+	SetupGlobalConsole(WithDefaultOutput(ioutil.Discard), WithErrorOutput(errorOut))
 
 	// Error should append a newline after printing.
 	Errorln("one sentence")
@@ -503,7 +503,7 @@ func TestGlobalConsoleErrorlnWithoutStep(t *testing.T) {
 func TestGlobalConsoleErrorfWithoutStep(t *testing.T) {
 	errorOut := &bytes.Buffer{}
 
-	SetGlobalOptions(WithDefaultOutput(ioutil.Discard), WithErrorOutput(errorOut))
+	SetupGlobalConsole(WithDefaultOutput(ioutil.Discard), WithErrorOutput(errorOut))
 
 	// Errorf should not append a newline after printing.
 	Errorf("one sentence")
@@ -855,7 +855,7 @@ func TestErrorfWithStep(t *testing.T) {
 func TestGlobalInfoWithStep(t *testing.T) {
 	defaultOut := &bytes.Buffer{}
 
-	SetGlobalOptions(WithDefaultOutput(defaultOut))
+	SetupGlobalConsole(WithDefaultOutput(defaultOut))
 	StartStep("test task")
 
 	cnsl.Info("one sentence")
@@ -879,7 +879,7 @@ func TestGlobalInfoWithStep(t *testing.T) {
 func TestGlobalInfolnWithStep(t *testing.T) {
 	defaultOut := &bytes.Buffer{}
 
-	SetGlobalOptions(WithDefaultOutput(defaultOut))
+	SetupGlobalConsole(WithDefaultOutput(defaultOut))
 	StartStep("test task")
 
 	cnsl.Infoln("one sentence")
@@ -903,7 +903,7 @@ func TestGlobalInfolnWithStep(t *testing.T) {
 func TestGlobalInfofWithStep(t *testing.T) {
 	defaultOut := &bytes.Buffer{}
 
-	SetGlobalOptions(WithDefaultOutput(defaultOut))
+	SetupGlobalConsole(WithDefaultOutput(defaultOut))
 	StartStep("test task")
 
 	cnsl.Infof("one sentence")
@@ -927,7 +927,7 @@ func TestGlobalInfofWithStep(t *testing.T) {
 func TestGlobalDebugEnabledWithStep(t *testing.T) {
 	defaultOut := &bytes.Buffer{}
 
-	SetGlobalOptions(WithDefaultOutput(defaultOut), WithDebug(true))
+	SetupGlobalConsole(WithDefaultOutput(defaultOut), WithDebug(true))
 	StartStep("test task")
 
 	cnsl.Debug("one sentence")
@@ -951,7 +951,7 @@ func TestGlobalDebugEnabledWithStep(t *testing.T) {
 func TestGlobalDebuglnEnabledWithStep(t *testing.T) {
 	defaultOut := &bytes.Buffer{}
 
-	SetGlobalOptions(WithDefaultOutput(defaultOut), WithDebug(true))
+	SetupGlobalConsole(WithDefaultOutput(defaultOut), WithDebug(true))
 	StartStep("test task")
 
 	cnsl.Debugln("one sentence")
@@ -975,7 +975,7 @@ func TestGlobalDebuglnEnabledWithStep(t *testing.T) {
 func TestGlobalDebugfEnabledWithStep(t *testing.T) {
 	defaultOut := &bytes.Buffer{}
 
-	SetGlobalOptions(WithDefaultOutput(defaultOut), WithDebug(true))
+	SetupGlobalConsole(WithDefaultOutput(defaultOut), WithDebug(true))
 	StartStep("test task")
 
 	cnsl.Debugf("one sentence")
@@ -999,7 +999,7 @@ func TestGlobalDebugfEnabledWithStep(t *testing.T) {
 func TestGlobalDebugDisabledWithStep(t *testing.T) {
 	defaultOut := &bytes.Buffer{}
 
-	SetGlobalOptions(WithDefaultOutput(defaultOut), WithDebug(false))
+	SetupGlobalConsole(WithDefaultOutput(defaultOut), WithDebug(false))
 	StartStep("test task")
 
 	cnsl.Debug("one sentence")
@@ -1024,7 +1024,7 @@ func TestGlobalDebugDisabledWithStep(t *testing.T) {
 func TestGlobalDebuglnDisabledWithStep(t *testing.T) {
 	defaultOut := &bytes.Buffer{}
 
-	SetGlobalOptions(WithDefaultOutput(defaultOut), WithDebug(false))
+	SetupGlobalConsole(WithDefaultOutput(defaultOut), WithDebug(false))
 	StartStep("test task")
 
 	cnsl.Debugln("one sentence")
@@ -1049,7 +1049,7 @@ func TestGlobalDebuglnDisabledWithStep(t *testing.T) {
 func TestGlobalDebugfDisabledWithStep(t *testing.T) {
 	defaultOut := &bytes.Buffer{}
 
-	SetGlobalOptions(WithDefaultOutput(defaultOut), WithDebug(false))
+	SetupGlobalConsole(WithDefaultOutput(defaultOut), WithDebug(false))
 	StartStep("test task")
 
 	cnsl.Debugf("one sentence")
@@ -1074,7 +1074,7 @@ func TestGlobalDebugfDisabledWithStep(t *testing.T) {
 func TestGlobalErrorWithStep(t *testing.T) {
 	errorOut := &bytes.Buffer{}
 
-	SetGlobalOptions(WithDefaultOutput(ioutil.Discard), WithErrorOutput(errorOut))
+	SetupGlobalConsole(WithDefaultOutput(ioutil.Discard), WithErrorOutput(errorOut))
 	StartStep("test task")
 
 	cnsl.Error("one sentence")
@@ -1098,7 +1098,7 @@ func TestGlobalErrorWithStep(t *testing.T) {
 func TestGlobalErrorlnWithStep(t *testing.T) {
 	errorOut := &bytes.Buffer{}
 
-	SetGlobalOptions(WithDefaultOutput(ioutil.Discard), WithErrorOutput(errorOut))
+	SetupGlobalConsole(WithDefaultOutput(ioutil.Discard), WithErrorOutput(errorOut))
 	StartStep("test task")
 
 	cnsl.Errorln("one sentence")
@@ -1122,7 +1122,7 @@ func TestGlobalErrorlnWithStep(t *testing.T) {
 func TestGlobalErrorfWithStep(t *testing.T) {
 	errorOut := &bytes.Buffer{}
 
-	SetGlobalOptions(WithDefaultOutput(ioutil.Discard), WithErrorOutput(errorOut))
+	SetupGlobalConsole(WithDefaultOutput(ioutil.Discard), WithErrorOutput(errorOut))
 	StartStep("test task")
 
 	cnsl.Errorf("one sentence")
