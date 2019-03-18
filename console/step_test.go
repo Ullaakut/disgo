@@ -258,3 +258,16 @@ func TestEndStepReturnsWhenNoStep(t *testing.T) {
 
 	EndStep()
 }
+
+func TestFailStepReturnsWhenNoStep(t *testing.T) {
+	cnsl = &Console{}
+
+	defer (func() {
+		if r := recover(); r != nil {
+			assert.FailNow(t, "Calling FailStep while no step is set should not panic")
+		}
+	})()
+
+	FailStepf("")
+	FailStep(nil)
+}

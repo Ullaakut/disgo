@@ -88,6 +88,10 @@ func StartStepf(format string, a ...interface{}) {
 // was in progress, and returns the given error for error
 // handling.
 func (c *Console) FailStep(err error) error {
+	if c.step == nil {
+		return err
+	}
+
 	fmt.Fprintln(c.defaultOutput, Failure("ko"))
 
 	c.printQueue()
