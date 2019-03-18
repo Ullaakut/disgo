@@ -90,9 +90,9 @@ Here is how to use them on a local console:
 
     // Error methods are similar to info, except that they are written on
     // the error writer (os.Stderr by default).
-    myConsole.Debugln("Number of days in a year:", 365)
-    myConsole.Debugf("Number of days in a year: %d\n", 365)
-    myConsole.Debug("Number of days in a year: 365\n")
+    myConsole.Errorln("Number of days in a year:", 365)
+    myConsole.Errorf("Number of days in a year: %d\n", 365)
+    myConsole.Error("Number of days in a year: 365\n")
 ```
 
 When using the global console, simply call the console printing functions directly:
@@ -113,9 +113,9 @@ When using the global console, simply call the console printing functions direct
 
     // Error methods are similar to info, except that they are written on
     // the error writer (os.Stderr by default).
-    console.Debugln("Number of days in a year:", 365)
-    console.Debugf("Number of days in a year: %d\n", 365)
-    console.Debug("Number of days in a year: 365\n")
+    console.Errorln("Number of days in a year:", 365)
+    console.Errorf("Number of days in a year: %d\n", 365)
+    console.Error("Number of days in a year: 365\n")
 ```
 
 ### Output Formatting
