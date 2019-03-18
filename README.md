@@ -56,13 +56,13 @@ When creating a `Console` instance or when using the global `Console` that this 
 - **`WithErrorWriter`**, which lets you specify an `io.Writer` on which `Error`-level outputs should be written _(it is set to `os.Stderr` by default)_
 - **`WithColors`**, which lets you explicitely enable or disable colors in your output _(it is enabled by default)_
 
-You can either pass those options to `disgo.New()` when creating a `Console` instance, like so:
+You can either pass those options to `disgo.NewConsole()` when creating a `Console` instance, like so:
 
 ```go
     myConsole := disgo.New(disgo.WithDebug(true))
 ```
 
-Or, if you are using the global disgo, you will simply need to call the `SetupGlobalConsole` function:
+Or, if you are using the global console, you will simply need to call the `SetupGlobalConsole` function:
 
 ```go
     disgo.SetupGlobalConsole(disgo.WithDebug(true))
@@ -70,9 +70,9 @@ Or, if you are using the global disgo, you will simply need to call the `SetupGl
 
 ### Writing to the Console
 
-Now that your disgo is set up, you can start writing on it. Printing functions behave idiomatically, like you would expect.
+Now that your console is set up, you can start writing on it. Printing functions behave idiomatically, like you would expect.
 
-Here is how to use them on a local disgo:
+Here is how to use them on a local console:
 
 ```go
     // All of those give the same output:
@@ -120,7 +120,7 @@ When using the global console, call the console printing functions directly:
 
 ### Output Formatting
 
-Another feature provided by this package is **output formatting**. It exposes six different output formats, which will print an output with a specific color, font-weight and font-style depending on what the output's content should convey to the user. For example, if you want to attract a user's attention to an error, you might use the `disgo.Failure()` formatting function, disgo so:
+Another feature provided by this package is **output formatting**. It exposes six different output formats, which will print an output with a specific color, font-weight and font-style depending on what the output's content should convey to the user. For example, if you want to attract a user's attention to an error, you might use the `disgo.Failure()` formatting function, like so:
 
 ```go
     if err := validateConfiguration; err != nil {
