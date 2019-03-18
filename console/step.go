@@ -126,6 +126,10 @@ func FailStepf(format string, a ...interface{}) error {
 // prints all of the outputs that were queued while the step
 // was in progress.
 func (c *Console) EndStep() {
+	if c.step == nil {
+		return
+	}
+
 	fmt.Fprintln(c.defaultOutput, Success("ok"))
 
 	c.printQueue()

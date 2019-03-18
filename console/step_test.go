@@ -242,3 +242,19 @@ func TestGlobalFailStepfOutput(t *testing.T) {
 
 	assert.Equal(t, "Simulated task #1...ko\n", defaultOut.String())
 }
+
+//*************//
+// Other tests //
+//*************//
+
+func TestEndStepReturnsWhenNoStep(t *testing.T) {
+	cnsl = &Console{}
+
+	defer (func() {
+		if r := recover(); r != nil {
+			assert.FailNow(t, "Calling EndStep while no step is set should not panic")
+		}
+	})()
+
+	EndStep()
+}
