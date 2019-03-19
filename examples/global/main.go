@@ -6,6 +6,7 @@ import (
 	"os"
 
 	"github.com/ullaakut/disgo"
+	"github.com/ullaakut/disgo/style"
 )
 
 // Produces the following output on success:
@@ -27,19 +28,19 @@ import (
 // ✔ Installation successful
 
 func main() {
-	disgo.SetupGlobalConsole(disgo.WithDebug(true))
+	disgo.SetTerminalOptions(disgo.WithDebug(true))
 
 	if err := install(); err != nil {
-		disgo.Errorln(disgo.Failure(err))
-		disgo.Infoln(disgo.Failure(disgo.SymbolCross), "Installation failed")
+		disgo.Errorln(style.Failure(err))
+		disgo.Infoln(style.Failure(style.SymbolCross), "Installation failed")
 		os.Exit(1)
 	}
 
-	disgo.Infoln(disgo.Success(disgo.SymbolCheck), "Installation successful")
+	disgo.Infoln(style.Success(style.SymbolCheck), "Installation successful")
 }
 
 func install() error {
-	disgo.Infoln("Looking for remote database on", disgo.Link("172.187.10.23"))
+	disgo.Infoln("Looking for remote database on", style.Link("172.187.10.23"))
 
 	disgo.StartStep("Accessing database")
 
@@ -49,7 +50,7 @@ func install() error {
 	disgo.Infoln("Local store up to date with remote database")
 	disgo.EndStep()
 
-	disgo.Debugln("Dashboard deployed at", disgo.Link("https://172.187.10.23:37356/dashboard"))
+	disgo.Debugln("Dashboard deployed at", style.Link("https://172.187.10.23:37356/dashboard"))
 
 	result, err := disgo.Confirm(disgo.Confirmation{
 		Label:              "Install with current database?",
@@ -58,7 +59,7 @@ func install() error {
 		Choices:            []string{"Y", "n"},
 	})
 	if err != nil {
-		return fmt.Errorf("Unexpected user input: %s", disgo.Failure(err))
+		return fmt.Errorf("Unexpected user input: %s", style.Failure(err))
 	}
 
 	disgo.StartStep("Installation in progress")

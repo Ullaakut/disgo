@@ -18,7 +18,7 @@
     </a>
 </p>
 
-Simple console output library for Go command-line interfaces.
+Simple library for building Go command-line interfaces.
 
 Disgo provides four essential features for most user-friendly CLI applications:
 
@@ -29,73 +29,74 @@ Disgo provides four essential features for most user-friendly CLI applications:
 
 ## Table of content
 
-1. [Console](#console)
-    1. [Console options](#console-options)
-    2. [Writing to the Console](#writing-to-the-console)
-    3. [Output Formatting](#output-formatting)
-    4. [Step-by-step processes](#step-by-step-processes)
-    5. [Symbols](#symbols)
-2. [Prompter](#prompter)
-    1. [Confirmation prompt](#confirmation-prompt)
-    2. [String input prompt](#string-input-prompt)
+1. [Terminal](#terminal)
+    1. [Terminal options](#terminal-options)
+    2. [Writing to the Terminal](#writing-to-the-terminal)
+    3. [Step-by-step Processes](#step-by-step-processes)
+    4. [Confirmation Prompt](#confirmation-prompt)
+    5. [String Input Prompt](#string-input-prompt)
+2. [Style](#style)
+    1. [Output Formatting](#output-formatting)
+    2. [Symbols](#symbols)
 3. [Examples](#examples)
 4. [License](#license)
 
-## Console
+## Terminal
 
-The disgo `Console` provides an idiomatic way to build user-friendly command-line interfaces.
+The disgo `Terminal` provides an easy way to build user-friendly command-line interfaces.
 
-You can use it globally within your application, or you can instantiate your own `Console`.
+You can use it globally within your application, or you can instantiate your own `Terminal`.
 
-### Console options
+### Terminal options
 
-When creating a `Console` instance or when using the global `Console` that this package provides, you might want to give it some options, such as:
+When creating a `Terminal` instance or when using the global `Terminal` that this package provides, you might want to give it some options, such as:
 
 - **`WithDebug`**, which lets you enable or disable the debug output _(it is disabled by default)_
 - **`WithDefaultWriter`**, which lets you specify an `io.Writer` on which `Debug` and `Info`-level outputs should be written _(it is set to `os.Stdout` by default)_
 - **`WithErrorWriter`**, which lets you specify an `io.Writer` on which `Error`-level outputs should be written _(it is set to `os.Stderr` by default)_
+- **`WithReader`**, which lets you specify an `io.Reader` from which the Terminal will be able to prompt the user _(it is set to `os.Stdin` by default)_
 - **`WithColors`**, which lets you explicitely enable or disable colors in your output _(it is enabled by default)_
+- **`WithInteractive`**, which specifies whether the Terminal should run in an interactive way, meaning prompts should wait for user input. If set to false, prompts will instantaneously returns their configured default value _(it is set to `true` by default)_
 
-You can either pass those options to `disgo.NewConsole()` when creating a `Console` instance, like so:
-
-```go
-    myConsole := disgo.New(disgo.WithDebug(true))
-```
-
-Or, if you are using the global console, you will simply need to call the `SetupGlobalConsole` function:
+You can either pass those options to `disgo.NewTerminal()` when creating a `Terminal` instance, like so:
 
 ```go
-    disgo.SetupGlobalConsole(disgo.WithDebug(true))
+    term := disgo.NewTerminal(disgo.WithDebug(true))
 ```
 
-### Writing to the Console
+Or, if you are using the global terminal, you will simply need to call the `SetTerminalOptions` function:
 
-Now that your console is set up, you can start writing on it. Printing functions behave idiomatically, like you would expect.
+```go
+    disgo.SetTerminalOptions(disgo.WithDebug(true))
+```
 
-Here is how to use them on a local console:
+### Writing to the Terminal
+
+Now that your terminal is set up, you can start writing to it.
+
+Here is how to use them on an instantiated terminal:
 
 ```go
     // All of those give the same output:
     // "Number of days in a year: 365" followed by a newline.
-    myConsole.Infoln("Number of days in a year:", 365)
-    myConsole.Infof("Number of days in a year: %d\n", 365)
-    myConsole.Info("Number of days in a year: 365\n")
+    term.Infoln("Number of days in a year:", 365)
+    term.Infof("Number of days in a year: %d\n", 365)
+    term.Info("Number of days in a year: 365\n")
 
     // Debug methods are similar to info, except that they are not printed
-    // if debug outputs are not enabled on the console.
-    myConsole.Debugln("Number of days in a year:", 365)
-    myConsole.Debugf("Number of days in a year: %d\n", 365)
-    myConsole.Debug("Number of days in a year: 365\n")
-
+    // if debug outputs are not enabled on the terminal.
+    term.Debugln("Number of days in a year:", 365)
+    term.Debugf("Number of days in a year: %d\n", 365)
+    term.Debug("Number of days in a year: 365\n")
 
     // Error methods are similar to info, except that they are written on
     // the error writer (os.Stderr by default).
-    myConsole.Errorln("Number of days in a year:", 365)
-    myConsole.Errorf("Number of days in a year: %d\n", 365)
-    myConsole.Error("Number of days in a year: 365\n")
+    term.Errorln("Number of days in a year:", 365)
+    term.Errorf("Number of days in a year: %d\n", 365)
+    term.Error("Number of days in a year: 365\n")
 ```
 
-When using the global console, call the console printing functions directly:
+When using the global terminal, call the terminal printing functions directly:
 
 ```go
     // All of those give the same output:
@@ -105,7 +106,7 @@ When using the global console, call the console printing functions directly:
     disgo.Info("Number of days in a year: 365\n")
 
     // Debug methods are similar to info, except that they are not printed
-    // if debug outputs are not enabled on the console.
+    // if debug outputs are not enabled on the terminal.
     disgo.Debugln("Number of days in a year:", 365)
     disgo.Debugf("Number of days in a year: %d\n", 365)
     disgo.Debug("Number of days in a year: 365\n")
@@ -118,32 +119,9 @@ When using the global console, call the console printing functions directly:
     disgo.Error("Number of days in a year: 365\n")
 ```
 
-### Output Formatting
-
-Another feature provided by this package is **output formatting**. It exposes six different output formats, which will print an output with a specific color, font-weight and font-style depending on what the output's content should convey to the user. For example, if you want to attract a user's attention to an error, you might use the `disgo.Failure()` formatting function, like so:
-
-```go
-    if err := validateConfiguration; err != nil {
-        disgo.Errorln("Invalid configuration detected:", disgo.Failure(err))
-        return err
-    }
-```
-
-<p align="center">
-    <img src="images/output_failure.png" />
-</p>
-
-Other output formats include `Success`, `Trace`, `Important` and `Link`.
-
-<p align="center">
-    <img width="40%" src="images/output_all.png" />
-</p>
-
-You can of course combine those formats in elegant ways, like shown in the [examples](#examples) section.
-
 ### Step-by-step processes
 
-A lot of command-line interfaces describe **step-by-step processes** to the user, but it's difficult to combine clean code, clear output and elegant user interfaces. Disgo attempts to solve that problem by associating _steps_ to its console.
+A lot of command-line interfaces describe **step-by-step processes** to the user, but it's difficult to combine clean code, clear output and elegant user interfaces. Disgo attempts to solve that problem by associating _steps_ to its terminal.
 
 For example, when beginning a task, you can use `StartStep` and specify the description of that step. Then, until that task is over, all calls to Disgo's printing functions will be queued. Once the task is complete (by calling `EndStep`, `FailStep` or by starting another step with `StartStep`), the task status is printed and all of the outputs that were queued during the task are printed with an indent, under the task, like so:
 
@@ -162,11 +140,7 @@ It is also important to note that **`FailStep` and `FailStepf` can be used to re
 
 Instead of having to call `FailStep` in your error handling before returning. You are still free to do so if you prefer, though.
 
-Using the global console for step management is not thread-safe though, as it was built with simplicity in mind and can only handle one step at a time.
-
-## Prompter
-
-The `Prompter` is not yet complete, as it only handles confirmation prompts for now. Its goal is to provide simple functions to prompt users for information.
+Using the global terminal for step management is not thread-safe though, as it was built with simplicity in mind and can only handle one step at a time.
 
 ### Confirmation prompt
 
@@ -229,17 +203,44 @@ And will use a custom parser for parsing the user's answer.
 
 Not implemented yet.
 
-## Symbols
+## Style
+
+The `style` package provides simple output formatting functions as well as some cherry-picked UTF-8 symbols that can be useful for building rich command-line interfaces.
+
+### Output Formatting
+
+The `style` package exposes six different output formats, which print its argument with a specific color, font-weight and font-style depending on what the output's content should convey to the user. For example, if you want to attract a user's attention to an error, you might use the `style.Failure()` formatting function, like so:
+
+```go
+    if err := validateConfiguration; err != nil {
+        disgo.Errorln("Invalid configuration detected:", style.Failure(err))
+        return err
+    }
+```
+
+<p align="center">
+    <img src="images/output_failure.png" />
+</p>
+
+Other output formats include `Success`, `Trace`, `Important` and `Link`.
+
+<p align="center">
+    <img width="40%" src="images/output_all.png" />
+</p>
+
+You can of course combine those formats in elegant ways, like shown in the [examples](#examples) section.
+
+### Symbols
 
 Disgo provides **aliases to UTF-8 characters** that could be useful to build your command-line interfaces.
 
 ```go
-    disgo.Infoln(disgo.SymbolCheck) // ✔
-    disgo.Infoln(disgo.SymbolCross) // ✖
-    disgo.Infoln(disgo.LeftArrow) // ❮
-    disgo.Infoln(disgo.RightArrow) // ❯
-    disgo.Infoln(disgo.LeftTriangle) // ◀
-    disgo.Infoln(disgo.RightTriangle) // ▶
+    disgo.Infoln(style.SymbolCheck) // ✔
+    disgo.Infoln(style.SymbolCross) // ✖
+    disgo.Infoln(style.SymbolLeftArrow) // ❮
+    disgo.Infoln(style.SymbolRightArrow) // ❯
+    disgo.Infoln(style.SymbolLeftTriangle) // ◀
+    disgo.Infoln(style.SymbolRightTriangle) // ▶
 ```
 
 ## Examples
