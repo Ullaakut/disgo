@@ -52,7 +52,7 @@ func (c *Console) StartStep(label string) {
 		c.EndStep()
 	}
 
-	fmt.Fprint(c.defaultOutput, Trace(label, "..."))
+	fmt.Fprint(c.defaultOutput, label, "...")
 
 	c.step = &step{}
 }
