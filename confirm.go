@@ -75,18 +75,18 @@ func (c Confirmation) choices() string {
 }
 
 // Confirm prompts the user to confirm something.
-func (p Prompter) Confirm(config Confirmation) (bool, error) {
+func (t Terminal) Confirm(config Confirmation) (bool, error) {
 	// If prompter is not set to interactive,
 	// directly return the default value.
-	if !p.interactive {
+	if !t.interactive {
 		return config.DefaultValue, nil
 	}
 
 	// Print the label and choices.
-	fmt.Fprintf(p.writer, "%s [%s] ", config.Label, config.choices())
+	fmt.Fprintf(t.defaultOutput, "%s [%s] ", config.Label, config.choices())
 
 	// Wait for user input.
-	text, err := p.reader.ReadString('\n')
+	text, err := t.reader.ReadString('\n')
 	if err != nil {
 		return false, err
 	}
@@ -101,7 +101,7 @@ func (p Prompter) Confirm(config Confirmation) (bool, error) {
 }
 
 // Confirm prompts the user to confirm something
-// using the global prompt.
+// using the global terminal.
 func Confirm(config Confirmation) (bool, error) {
-	return prompt.Confirm(config)
+	return globalTerm.Confirm(config)
 }

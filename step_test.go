@@ -12,18 +12,18 @@ import (
 func TestStartStepQueuesOutputs(t *testing.T) {
 	defaultOut := &bytes.Buffer{}
 
-	console := &Console{
+	term := &Terminal{
 		defaultOutput: defaultOut,
 	}
 
 	// Outputs should be queued during a task, and printed afterwards.
-	console.Infoln("Test step-by-step process")
-	console.StartStep("Simulated task #1")
-	console.Infoln("25%")
-	console.Infoln("50%")
-	console.Infoln("75%")
-	console.Infoln("100%")
-	console.EndStep()
+	term.Infoln("Test step-by-step process")
+	term.StartStep("Simulated task #1")
+	term.Infoln("25%")
+	term.Infoln("50%")
+	term.Infoln("75%")
+	term.Infoln("100%")
+	term.EndStep()
 
 	assert.Equal(t, "Test step-by-step process\nSimulated task #1...ok\n  > 25%\n  > 50%\n  > 75%\n  > 100%\n", defaultOut.String())
 }
@@ -31,18 +31,18 @@ func TestStartStepQueuesOutputs(t *testing.T) {
 func TestStartStepfQueuesOutputs(t *testing.T) {
 	defaultOut := &bytes.Buffer{}
 
-	console := &Console{
+	term := &Terminal{
 		defaultOutput: defaultOut,
 	}
 
 	// Outputs should be queued during a task, and printed afterwards.
-	console.Infoln("Test step-by-step process")
-	console.StartStepf("Simulated task #%d", 1)
-	console.Infoln("25%")
-	console.Infoln("50%")
-	console.Infoln("75%")
-	console.Infoln("100%")
-	console.EndStep()
+	term.Infoln("Test step-by-step process")
+	term.StartStepf("Simulated task #%d", 1)
+	term.Infoln("25%")
+	term.Infoln("50%")
+	term.Infoln("75%")
+	term.Infoln("100%")
+	term.EndStep()
 
 	assert.Equal(t, "Test step-by-step process\nSimulated task #1...ok\n  > 25%\n  > 50%\n  > 75%\n  > 100%\n", defaultOut.String())
 }
@@ -50,14 +50,14 @@ func TestStartStepfQueuesOutputs(t *testing.T) {
 func TestStepSystemStopsPreviousTaskWhenStartingNewOne(t *testing.T) {
 	defaultOut := &bytes.Buffer{}
 
-	console := &Console{
+	term := &Terminal{
 		defaultOutput: defaultOut,
 	}
 
 	// Starting a task while another is in progress should consider the previous
 	// task successfully ended.
-	console.StartStep("Simulated task #1")
-	console.StartStep("Simulated task #2")
+	term.StartStep("Simulated task #1")
+	term.StartStep("Simulated task #2")
 
 	assert.Equal(t, "Simulated task #1...ok\nSimulated task #2...", defaultOut.String())
 }
@@ -65,14 +65,14 @@ func TestStepSystemStopsPreviousTaskWhenStartingNewOne(t *testing.T) {
 func TestFailStepReturnsError(t *testing.T) {
 	defaultOut := &bytes.Buffer{}
 
-	console := &Console{
+	term := &Terminal{
 		defaultOutput: defaultOut,
 	}
 
-	console.StartStep("Simulated task #1")
+	term.StartStep("Simulated task #1")
 
 	dummyError := errors.New("dummy error")
-	err := console.FailStep(dummyError)
+	err := term.FailStep(dummyError)
 
 	// FailStep should return the given error without modifications.
 	assert.Equal(t, dummyError, err)
@@ -81,14 +81,14 @@ func TestFailStepReturnsError(t *testing.T) {
 func TestFailStepfCreatesError(t *testing.T) {
 	defaultOut := &bytes.Buffer{}
 
-	console := &Console{
+	term := &Terminal{
 		defaultOutput: defaultOut,
 	}
 
-	console.StartStep("Simulated task #1")
+	term.StartStep("Simulated task #1")
 
 	expectedError := fmt.Errorf("task %d failed", 1)
-	err := console.FailStepf("task %d failed", 1)
+	err := term.FailStepf("task %d failed", 1)
 
 	// FailStep should return the given error without modifications.
 	assert.Equal(t, expectedError, err)
@@ -97,14 +97,14 @@ func TestFailStepfCreatesError(t *testing.T) {
 func TestFailStepOutput(t *testing.T) {
 	defaultOut := &bytes.Buffer{}
 
-	console := &Console{
+	term := &Terminal{
 		defaultOutput: defaultOut,
 	}
 
 	// Starting a task while another is in progress should consider the previous
 	// task successfully ended.
-	console.StartStep("Simulated task #1")
-	_ = console.FailStep(nil)
+	term.StartStep("Simulated task #1")
+	_ = term.FailStep(nil)
 
 	assert.Equal(t, "Simulated task #1...ko\n", defaultOut.String())
 }
@@ -112,26 +112,26 @@ func TestFailStepOutput(t *testing.T) {
 func TestFailStepfOutput(t *testing.T) {
 	defaultOut := &bytes.Buffer{}
 
-	console := &Console{
+	term := &Terminal{
 		defaultOutput: defaultOut,
 	}
 
 	// Starting a task while another is in progress should consider the previous
 	// task successfully ended.
-	console.StartStep("Simulated task #1")
-	_ = console.FailStepf("task %d failed", 1)
+	term.StartStep("Simulated task #1")
+	_ = term.FailStepf("task %d failed", 1)
 
 	assert.Equal(t, "Simulated task #1...ko\n", defaultOut.String())
 }
 
 //*********************//
-// Test Global Console //
+// Test Global Terminal //
 //*********************//
 
 func TestGlobalStartStepQueuesOutputs(t *testing.T) {
 	defaultOut := &bytes.Buffer{}
 
-	cnsl = &Console{
+	globalTerm = &Terminal{
 		defaultOutput: defaultOut,
 	}
 
@@ -150,7 +150,7 @@ func TestGlobalStartStepQueuesOutputs(t *testing.T) {
 func TestGlobalStartStepfQueuesOutputs(t *testing.T) {
 	defaultOut := &bytes.Buffer{}
 
-	cnsl = &Console{
+	globalTerm = &Terminal{
 		defaultOutput: defaultOut,
 	}
 
@@ -169,7 +169,7 @@ func TestGlobalStartStepfQueuesOutputs(t *testing.T) {
 func TestGlobalStepSystemStopsPreviousTaskWhenStartingNewOne(t *testing.T) {
 	defaultOut := &bytes.Buffer{}
 
-	cnsl = &Console{
+	globalTerm = &Terminal{
 		defaultOutput: defaultOut,
 	}
 
@@ -184,7 +184,7 @@ func TestGlobalStepSystemStopsPreviousTaskWhenStartingNewOne(t *testing.T) {
 func TestGlobalFailStepReturnsError(t *testing.T) {
 	defaultOut := &bytes.Buffer{}
 
-	cnsl = &Console{
+	globalTerm = &Terminal{
 		defaultOutput: defaultOut,
 	}
 
@@ -200,7 +200,7 @@ func TestGlobalFailStepReturnsError(t *testing.T) {
 func TestGlobalFailStepfCreatesError(t *testing.T) {
 	defaultOut := &bytes.Buffer{}
 
-	cnsl = &Console{
+	globalTerm = &Terminal{
 		defaultOutput: defaultOut,
 	}
 
@@ -216,7 +216,7 @@ func TestGlobalFailStepfCreatesError(t *testing.T) {
 func TestGlobalFailStepOutput(t *testing.T) {
 	defaultOut := &bytes.Buffer{}
 
-	cnsl = &Console{
+	globalTerm = &Terminal{
 		defaultOutput: defaultOut,
 	}
 
@@ -231,7 +231,7 @@ func TestGlobalFailStepOutput(t *testing.T) {
 func TestGlobalFailStepfOutput(t *testing.T) {
 	defaultOut := &bytes.Buffer{}
 
-	cnsl = &Console{
+	globalTerm = &Terminal{
 		defaultOutput: defaultOut,
 	}
 
@@ -248,7 +248,7 @@ func TestGlobalFailStepfOutput(t *testing.T) {
 //*************//
 
 func TestEndStepReturnsWhenNoStep(t *testing.T) {
-	cnsl = &Console{}
+	globalTerm = &Terminal{}
 
 	defer (func() {
 		if r := recover(); r != nil {
@@ -260,7 +260,7 @@ func TestEndStepReturnsWhenNoStep(t *testing.T) {
 }
 
 func TestFailStepReturnsWhenNoStep(t *testing.T) {
-	cnsl = &Console{}
+	globalTerm = &Terminal{}
 
 	defer (func() {
 		if r := recover(); r != nil {

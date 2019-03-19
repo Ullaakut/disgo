@@ -1,4 +1,5 @@
-package disgo
+package style
+
 
 // This file contains a few cherry-picked UTF-8 symbols to be
 // used to build user-friendly command-line interfaces.

@@ -1,4 +1,4 @@
-package disgo
+package style
 
 import (
 	"github.com/fatih/color"

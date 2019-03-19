@@ -90,7 +90,7 @@ func TestPrompterConfirm(t *testing.T) {
 			_, err := in.Write(append([]byte(test.input), '\n'))
 			require.NoError(t, err)
 
-			subject := NewPrompter(WithReader(&in), WithWriter(&out))
+			subject := NewTerminal(WithReader(&in), WithDefaultOutput(&out))
 
 			result, err := subject.Confirm(Confirmation{
 				Label:              test.prompt,
@@ -135,7 +135,7 @@ func TestReadError(t *testing.T) {
 	_, err := in.Write(append([]byte("user input"), '\n'))
 	require.NoError(t, err)
 
-	subject := NewPrompter(WithReader(&in), WithWriter(&out))
+	subject := NewTerminal(WithReader(&in), WithDefaultOutput(&out))
 
 	_, err = subject.Confirm(Confirmation{
 		Label: "label",
@@ -149,7 +149,7 @@ func TestNonInteractivePrompter(t *testing.T) {
 	in := readerMock{}
 	out := bytes.Buffer{}
 
-	subject := NewPrompter(WithReader(&in), WithWriter(&out), WithInteractive(false))
+	subject := NewTerminal(WithReader(&in), WithDefaultOutput(&out), WithInteractive(false))
 
 	value, err := subject.Confirm(Confirmation{
 		Label:        "label",
@@ -172,7 +172,7 @@ func TestGlobalPrompter(t *testing.T) {
 	_, err := in.Write(append([]byte("y"), '\n'))
 	require.NoError(t, err)
 
-	SetupGlobalPrompter(WithReader(&in), WithWriter(&out))
+	SetTerminalOptions(WithReader(&in), WithDefaultOutput(&out))
 
 	_, err = Confirm(Confirmation{
 		Label:        "label",
