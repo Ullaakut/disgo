@@ -45,7 +45,7 @@ func (s *step) pushError(content string) {
 
 // StartStep sets a step in the console, which prints
 // the step's label and makes the console queue outputs
-// until the step is or failed. If a step was already in
+// until the step is ended or failed. If a step was already in
 // progress, it is considered to have been ended successfully.
 func (c *Console) StartStep(label string) {
 	if c.step != nil {
@@ -59,7 +59,7 @@ func (c *Console) StartStep(label string) {
 
 // StartStep sets a step in the global console, which prints
 // the step's label and makes the console queue outputs
-// until the step is or failed. If a step was already in
+// until the step is ended or failed. If a step was already in
 // progress, it is considered to have been ended successfully.
 // Warning: This is not thread-safe.
 func StartStep(label string) {
@@ -68,7 +68,7 @@ func StartStep(label string) {
 
 // StartStepf sets a step in the console, which prints
 // the step's label and makes the console queue outputs
-// until the step is or failed. If a step was already in
+// until the step is ended or failed. If a step was already in
 // progress, it is considered to have been ended successfully.
 func (c *Console) StartStepf(format string, a ...interface{}) {
 	c.StartStep(fmt.Sprintf(format, a...))
@@ -76,7 +76,7 @@ func (c *Console) StartStepf(format string, a ...interface{}) {
 
 // StartStepf sets a step in the console, which prints
 // the step's label and makes the console queue outputs
-// until the step is or failed. If a step was already in
+// until the step is ended or failed. If a step was already in
 // progress, it is considered to have been ended successfully.
 // Warning: This is not thread-safe.
 func StartStepf(format string, a ...interface{}) {
