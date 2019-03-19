@@ -31,11 +31,11 @@ func main() {
 
 	if err := install(); err != nil {
 		disgo.Errorln(disgo.Failure(err))
-		disgo.Infoln(disgo.Failure(disgo.Cross), "Installation failed")
+		disgo.Infoln(disgo.Failure(disgo.SymbolCross), "Installation failed")
 		os.Exit(1)
 	}
 
-	disgo.Infoln(disgo.Success(disgo.Check), "Installation successful")
+	disgo.Infoln(disgo.Success(disgo.SymbolCheck), "Installation successful")
 }
 
 func install() error {

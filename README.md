@@ -234,8 +234,8 @@ Not implemented yet.
 Disgo provides **aliases to UTF-8 characters** that could be useful to build your command-line interfaces.
 
 ```go
-    disgo.Infoln(disgo.Check) // ✔
-    disgo.Infoln(disgo.Cross) // ✖
+    disgo.Infoln(disgo.SymbolCheck) // ✔
+    disgo.Infoln(disgo.SymbolCross) // ✖
     disgo.Infoln(disgo.LeftArrow) // ❮
     disgo.Infoln(disgo.RightArrow) // ❯
     disgo.Infoln(disgo.LeftTriangle) // ◀
