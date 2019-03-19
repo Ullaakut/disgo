@@ -156,11 +156,11 @@ func TestNonInteractivePrompter(t *testing.T) {
 		DefaultValue: true,
 	})
 
-	// Ensure that when the prompter is set to non-interactive,
+	// Ensure that when the terminal is set to non-interactive,
 	// it returns no error.
 	assert.NoError(t, err)
 
-	// Ensure that when the prompter is set to non-interactive,
+	// Ensure that when the terminal is set to non-interactive,
 	// it returns the default value.
 	assert.Equal(t, true, value)
 }
@@ -179,7 +179,7 @@ func TestGlobalPrompter(t *testing.T) {
 		DefaultValue: true,
 	})
 
-	// Ensure that when the prompter is set to non-interactive,
+	// Ensure that when the terminal is set to non-interactive,
 	// it returns no error.
 	assert.NoError(t, err)
 }

@@ -98,7 +98,7 @@ func WithColors(enabled bool) func(*Terminal) {
 	}
 }
 
-// WithInteractive enables or disables the prompter interactive mode.
+// WithInteractive enables or disables the terminal interactive mode.
 func WithInteractive(enabled bool) func(*Terminal) {
 	return func(term *Terminal) {
 		term.interactive = enabled

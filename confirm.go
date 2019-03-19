@@ -44,14 +44,14 @@ type Confirmation struct {
 	// the default value, if there is one).
 	Choices []string
 
-	// EnableDefaultValue tells the prompter whether or not
+	// EnableDefaultValue tells the terminal whether or not
 	// there is a default value that will be used when the
 	// user doesn't input any data.
 	EnableDefaultValue bool
 
 	// DefaultValue is the default value that will be used when
 	// the user doesn't input any data, if EnableDefaultValue
-	// is set to true OR that the prompter is set to not
+	// is set to true OR that the terminal is set to not
 	// interactive.
 	DefaultValue bool
 
@@ -76,7 +76,7 @@ func (c Confirmation) choices() string {
 
 // Confirm prompts the user to confirm something.
 func (t Terminal) Confirm(config Confirmation) (bool, error) {
-	// If prompter is not set to interactive,
+	// If terminal is not set to interactive,
 	// directly return the default value.
 	if !t.interactive {
 		return config.DefaultValue, nil
