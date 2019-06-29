@@ -29,17 +29,27 @@ Disgo provides four essential features for most user-friendly CLI applications:
 
 ## Table of content
 
-1. [Terminal](#terminal)
+1. [Examples](#examples)
+2. [Terminal](#terminal)
     1. [Terminal options](#terminal-options)
     2. [Writing to the Terminal](#writing-to-the-terminal)
     3. [Step-by-step Processes](#step-by-step-processes)
     4. [Confirmation Prompt](#confirmation-prompt)
     5. [String Input Prompt](#string-input-prompt)
-2. [Style](#style)
+3. [Style](#style)
     1. [Output Formatting](#output-formatting)
     2. [Symbols](#symbols)
-3. [Examples](#examples)
 4. [License](#license)
+
+## Examples
+
+Here are a few examples of Disgo's output, used by other repositories:
+
+<p align="center">
+    <img width="70%" src="images/gorsair.gif" /><br/>
+    <img width="70%" src="images/cameradar.png" /><br/>
+    <img width="70%" src="images/astronomer.png" />
+</p>
 
 ## Terminal
 
@@ -242,16 +252,6 @@ Disgo provides **aliases to UTF-8 characters** that could be useful to build you
     disgo.Infoln(style.SymbolLeftTriangle) // ◀
     disgo.Infoln(style.SymbolRightTriangle) // ▶
 ```
-
-## Examples
-
-Here are a few examples of Disgo's output, using this repository's example program:
-
-<p align="center">
-    <img width="70%" src="images/example_success.png" /><br/>
-    <img width="70%" src="images/example_failure.png" /><br/>
-    <img width="70%" src="images/example_failure_prompt.png" />
-</p>
 
 ## License
 
