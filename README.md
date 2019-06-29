@@ -45,9 +45,13 @@ Disgo provides four essential features for most user-friendly CLI applications:
 
 Here are a few examples of Disgo's output, used by other repositories:
 
-<p align="center">
-    <img width="70%" src="images/gorsair.gif" /><br/>
-    <img width="70%" src="images/cameradar.png" /><br/>
+<p align="left">
+    <img width="70%" src="images/cameradar.png" />
+</p>
+<p align="right">
+    <img width="70%" src="images/gorsair.gif" />
+</p>
+<p align="left">
     <img width="70%" src="images/astronomer.png" />
 </p>
 
