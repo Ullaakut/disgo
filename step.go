@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/ullaakut/disgo/style"
+	"github.com/Ullaakut/disgo/style"
 )
 
 type outputLevel int
